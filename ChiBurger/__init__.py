@@ -2,9 +2,11 @@
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_debugtoolbar import DebugToolbarExtension
 from config import config
 
 db = SQLAlchemy()
+toolbar = DebugToolbarExtension()
 
 def create_app(config_name):
     # initialize app
@@ -16,13 +18,14 @@ def create_app(config_name):
 
     # flask extensions initial
     db.init_app(app)
+    toolbar.init_app(app)
 
     # import blueprint
     from .admin import admin as admin_blueprint
     from .blog import blog as blog_blueprint
 
     # register blueprint
-    app.register_blueprint(admin_blueprint,url_sufix='/admin')
+    app.register_blueprint(admin_blueprint,url_prefix='/admin')
     app.register_blueprint(blog_blueprint)
 
     return app
