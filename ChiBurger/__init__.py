@@ -1,12 +1,18 @@
 # -*- coding:utf-8 -*-
 
 from flask import Flask
+
 from flask_sqlalchemy import SQLAlchemy
 from flask_debugtoolbar import DebugToolbarExtension
+from flask.ext.login import LoginManager
+
 from config import config
 
 db = SQLAlchemy()
 toolbar = DebugToolbarExtension()
+login_manager = LoginManager()
+login_manager.session_protection = 'strong'
+login_manager.login_view = 'blog.login'
 
 def create_app(config_name):
     # initialize app
@@ -19,6 +25,7 @@ def create_app(config_name):
     # flask extensions initial
     db.init_app(app)
     toolbar.init_app(app)
+    login_manager.init_app(app)
 
     # import blueprint
     from .admin import admin as admin_blueprint
