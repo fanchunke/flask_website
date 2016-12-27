@@ -10,7 +10,7 @@ from ChiBurger import create_app, db
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 
 def make_shell_context():
-	return dict(app=app, db=db)
+    return dict(app=app, db=db)
 
 migrate = Migrate(app, db)
 manager = Manager(app)

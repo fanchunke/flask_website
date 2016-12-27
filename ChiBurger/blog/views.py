@@ -4,4 +4,4 @@ from . import blog
 
 @blog.route('/')
 def index():
-	return "This is blog'index page!"
+    return "This is blog'index page!"
