@@ -4,7 +4,7 @@ from flask import Flask
 
 from flask_sqlalchemy import SQLAlchemy
 from flask_debugtoolbar import DebugToolbarExtension
-from flask.ext.login import LoginManager
+from flask_login import LoginManager
 
 from config import config
 
