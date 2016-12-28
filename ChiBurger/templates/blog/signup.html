@@ -1,26 +1,22 @@
 {% extends "blog/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 
 {% block title %}Sign up{% endblock %}
 
 {% block content %}
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <ul class=flashes>
-    {% for message in messages %}
-      <li>{{ message }}</li>
-    {% endfor %}
-    </ul>
-  {% endif %}
-{% endwith %}
-<h1>Sign Up</h1>
-{% from "blog/_formhelpers.html" import render_field %}
-<form action="" method="post" name="signup">
-    <dl>
-    {{ render_field(form.username) }}
-    {{ render_field(form.email) }}
-    {{ render_field(form.password) }}
-    {{ render_field(form.confirm) }}
-  </dl>
-  <p><input type=submit value=Register>
-</form>
+<div class="row">
+  <div class="col-md-4">
+      {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul class=flashes>
+            {% for message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+      {% endwith %}
+      <h1>Sign Up</h1>
+      {{ wtf.quick_form(form) }}
+  </div>
+</div>
 {% endblock %}
