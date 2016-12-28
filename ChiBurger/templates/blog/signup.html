@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Sign Up</title>
-</head>
-<body>
+{% extends "blog/base.html" %}
+
+{% block title %}Sign up{% endblock %}
+
+{% block content %}
 {% with messages = get_flashed_messages() %}
   {% if messages %}
     <ul class=flashes>
@@ -24,5 +23,4 @@
   </dl>
   <p><input type=submit value=Register>
 </form>
-</body>
-</html>
+{% endblock %}
