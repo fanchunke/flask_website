@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 
 from flask import render_template, url_for, abort, redirect, flash, request
-from flask_login import login_user
+from flask_login import login_user, logout_user, login_required
 
 from . import blog
 from .. import db
@@ -42,3 +42,9 @@ def signup():
         flash('You are registered successfully. Now you can login.')
         return redirect(url_for('blog.login'))
     return render_template('blog/signup.html', form=form)
+
+@blog.route('/logout')
+@login_required
+def logout():
+    login_user()
+    return render_template(url_for('blog.index'))
