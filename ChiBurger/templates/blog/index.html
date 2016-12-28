@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Index Page</title>
+</head>
+<body>
+<div class="login">
+<a href="{{ url_for('blog.login') }}">Login</a>
+</div>
+{% for article in articles %}
+<div class="article">
+    <p>{{ article.title }}</p>
+    <p>{{ article.body }}</p>
+    {% else %}
+    <p>No articles</p>
+</div>
+{% endfor %}
+</body>
+</html>
