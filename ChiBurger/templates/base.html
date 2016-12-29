@@ -18,17 +18,17 @@
       <div class="container-fluid">
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li role="presentation" class="active"><a href="{{url_for('blog.index')}}">Home</a></li>
+              <li role="presentation" class="active"><a href="{{url_for('main.index')}}">Home</a></li>
               <li role="presentation"><a href="#">Profile</a></li>
               <li role="presentation"><a href="#">Messages</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               {% if current_user.is_authenticated %}
-                <li><a href="{{ url_for('blog.login') }}">Logout</a></li>
+                <li><a href="{{ url_for('main.logout') }}">Logout</a></li>
                 {% else %}
-                <li><a href="{{ url_for('blog.login') }}">Login</a></li>
+                <li><a href="{{ url_for('main.login') }}">Login</a></li>
               {% endif %}
-              <li><a href="{{ url_for('blog.signup') }}">Sign up</a></li>
+              <li><a href="{{ url_for('main.signup') }}">Sign up</a></li>
             </ul>
           </div>
         </div>
