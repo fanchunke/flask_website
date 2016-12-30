@@ -5,7 +5,7 @@ from flask_login import login_user, logout_user, login_required
 
 from . import blog
 from .. import db
-from ..models import Article, User
+from ..models import Article, User, Category
 from .forms import LoginForm, SignupForm
 
 @blog.route('/', methods=['GET'])
@@ -15,9 +15,15 @@ def index():
 
 
 @blog.route('/<catname>')
-def get_category(catname):
+def category(catname):
     category = Category.query.filter_by(name=catname).first()
     if category is not None:
         articles = category.articles.all()
         return render_template('blog/category.html', articles=articles)
     return redirect(url_for('blog.index'))
+
+
+@blog.route('/article/<int:id>')
+def article(id):
+    article = Article.query.get_or_404(id)
+    return render_template('blog/article.html', article=article)
