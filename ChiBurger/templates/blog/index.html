@@ -7,17 +7,26 @@
 {% if current_user.is_authenticated %}
 <h1>Hello, {{ current_user.username }}!</h1>
 {% endif %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-success" role="alert">{{message}}</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
 <div class="row">
     <div class="col-md-6">
         {{ wtf.quick_form(form) }}
     </div>
 </div>
-{% for article in articles %}
+{% if articles %}
 <div class="article">
-    <p>{{ article.title }}</p>
+{% for article in articles %}
+    <h1>{{ article.title }}</h1>
     <p>{{ article.body }}</p>
-    {% else %}
+{% endfor %}
+{% else %}
     <p>No articles</p>
 </div>
-{% endfor %}
+{% endif %}
 {% endblock %}
