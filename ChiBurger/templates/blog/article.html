@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% import "bootstrap/wtf.html" as wtf  %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if current_user.is_authenticated %}
+<h1>Hello, {{ current_user.username }}!</h1>
+{% endif %}
+<div class="row">
+    <div class="col-md-4">
+        <h3>I am a side</h3>
+    </div>
+    <div class="col-md-8">
+        <div class="article">
+            {% if article %}
+            <h1>{{ article.title }}</h1>
+            <span>时间：{{ article.pub_time }}</span>
+            <p>{{ article.body }}</p>
+            {% else %}
+            <p>No articles</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

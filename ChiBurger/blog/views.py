@@ -6,12 +6,24 @@ from flask_login import login_user, logout_user, login_required
 from . import blog
 from .. import db
 from ..models import Article, User, Category
-from .forms import LoginForm, SignupForm
+from .forms import ArticleForm
 
-@blog.route('/', methods=['GET'])
+"""
+ // TODO: 修改methods和视图对应的html
+"""
+@blog.route('/', methods=['GET', 'POST'])
 def index():
+    form = ArticleForm()
+    if form.validate_on_submit():
+        article = Article(title=form.title.data,
+                          body=form.body.data)
+        form.title.data=''
+        form.body.data=''
+        db.session.add(article)
+        db.session.commit()
+        flash('You have posted successfully!')
     articles = Article.query.all()
-    return render_template('blog/index.html', articles=articles)
+    return render_template('blog/index.html', articles=articles, form=form)
 
 
 @blog.route('/<catname>')

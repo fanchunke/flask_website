@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% import "bootstrap/wtf.html" as wtf  %}
 
 {% block title %}Home{% endblock %}
 
@@ -6,6 +7,11 @@
 {% if current_user.is_authenticated %}
 <h1>Hello, {{ current_user.username }}!</h1>
 {% endif %}
+<div class="row">
+    <div class="col-md-6">
+        {{ wtf.quick_form(form) }}
+    </div>
+</div>
 {% for article in articles %}
 <div class="article">
     <p>{{ article.title }}</p>

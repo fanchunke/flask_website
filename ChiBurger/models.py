@@ -50,6 +50,15 @@ class Category(db.Model):
     name = db.Column(db.String(20), unique=True, nullable=False)
     articles = db.relationship('Article', backref='category',  lazy='dynamic')
 
+    def __init__(self, name):
+        self.name = name
+
+        defalutName = ['default']
+        for name in defalutName:
+            defaultCategory = Category(name=name)
+            db.session.add(defaultCategory)
+            db.session.commit()
+
     def  __repr__(self):
         return '<Category %r>' % self.name
 
