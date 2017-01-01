@@ -14,19 +14,43 @@
 {% endfor %}
 {% endif %}
 {% endwith %}
+<br>
 <div class="row">
     <div class="col-md-6">
         {{ wtf.quick_form(form) }}
     </div>
 </div>
+<br>
 {% if articles %}
+<h2>Articles in my blog</h2>
 <div class="article">
-{% for article in articles %}
-    <h1>{{ article.title }}</h1>
-    <p>{{ article.body }}</p>
-{% endfor %}
+<table class="table table-borded table-hover table-condensed">
+    <thead>
+    <tr>
+        <th>title</th>
+        <th>user</th>
+        <th>pub_time</th>
+        <th>likes</th>
+        <th>edit/delete</th>
+    </tr>
+</thead>
+<tbody>
+    {% for article in articles %}
+    <tr>
+        <th>{{ article.title }}</th>
+        <th>{{ article.user }}</th>
+        <th>{{ article.pub_time }}</th>
+        <th>{{ article.like_num }}</th>
+        <th>
+            <span><a href="#"> Edit</a></span>
+            <span><a href="#"> Delete</a></span>
+        </th>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+</div>
 {% else %}
     <p>No articles</p>
-</div>
 {% endif %}
 {% endblock %}

@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 
-from flask import render_template, url_for, abort, redirect, flash, request
+from flask import render_template, url_for, abort, redirect, flash, request, jsonify
 from flask_login import login_user, logout_user, login_required
 
 from . import blog
@@ -46,3 +46,12 @@ def article(id):
 // TODO: 考虑文章内容增加、修改、更新、删除等的实现方式
 // TODO: 是通过增加视图函数还是通过JavaScript
 """
+
+# return json response for an article
+@blog.route('/_get_article_info/<int:id>')
+def ger_article_info(id):
+    article = Article.query.get_or_404(id)
+    return jsonify(title=article.title,body=article.body,
+                    pub_time=article.pub_time,mod_time=article.mod_time,
+                    user=article.user,category=article.category,
+                    comments=article.comments.all(),like_num=article.like_num)
