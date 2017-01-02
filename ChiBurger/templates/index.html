@@ -6,12 +6,23 @@
 {% if current_user.is_authenticated %}
 <h1>Hello, {{ current_user.username }}!</h1>
 {% endif %}
-{% for article in articles %}
-<div class="article">
-    <p>{{ article.title }}</p>
-    <p>{{ article.body }}</p>
-    {% else %}
-    <p>No articles</p>
+<form id="target" action="">
+  <input type="text" value="Hello there" />
+  <input type="submit" value="Go" />
+</form>
+<div id="other">
+  Trigger the handler
 </div>
-{% endfor %}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#target').submit(function() {
+          alert('Handler for .submit() called.');
+          return false;
+        });
+        function handler(event) {
+            alert(event.data.foo);
+        }
+        $('#other').bind('click', {foo:'bar'}, handler);
+    })
+</script>
 {% endblock %}

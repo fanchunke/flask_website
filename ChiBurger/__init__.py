@@ -10,7 +10,7 @@ from flask_bootstrap import Bootstrap
 from config import config
 
 db = SQLAlchemy()
-toolbar = DebugToolbarExtension()
+# toolbar = DebugToolbarExtension()
 login_manager = LoginManager()
 login_manager.session_protection = 'strong'
 login_manager.login_view = 'blog.login'
@@ -26,7 +26,7 @@ def create_app(config_name):
 
     # flask extensions initial
     db.init_app(app)
-    toolbar.init_app(app)
+    # toolbar.init_app(app)
     login_manager.init_app(app)
     bootstrap.init_app(app)
 

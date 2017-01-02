@@ -8,36 +8,39 @@
 {% block head %}
 {{ super() }}
 <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
 <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 {% endblock %}
 
 {% block body %}
-    {% block navbar %}
-    <nav class="navbar navbar-default" role="navigation">
-      <div class="container-fluid">
-          <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-              <li role="presentation" class="active"><a href="{{url_for('main.index')}}">Home</a></li>
-              <li role="presentation"><a href="#">Profile</a></li>
-              <li role="presentation"><a href="#">Messages</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-              {% if current_user.is_authenticated %}
-                <li><a href="{{ url_for('main.logout') }}">Logout</a></li>
-                {% else %}
-                <li><a href="{{ url_for('main.login') }}">Login</a></li>
-              {% endif %}
-              <li><a href="{{ url_for('main.signup') }}">Sign up</a></li>
-            </ul>
-          </div>
-        </div>
-    </nav>
-    {% endblock %}
-    <div class="container">
-        <div class="row">
-        {% block content %}{% endblock %}
-        </div>
+  {% block navbar %}
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li role="presentation" class="active"><a href="{{url_for('main.index')}}">Home</a></li>
+          <li role="presentation"><a href="#">Profile</a></li>
+          <li role="presentation"><a href="#">Messages</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          {% if current_user.is_authenticated %}
+            <li><a href="{{ url_for('main.logout') }}">Logout</a></li>
+            {% else %}
+            <li><a href="{{ url_for('main.login') }}">Login</a></li>
+          {% endif %}
+          <li><a href="{{ url_for('main.signup') }}">Sign up</a></li>
+        </ul>
+      </div>
     </div>
+  </nav>
+  {% endblock %}
+  <div class="container">
+    <div class="row">
+    {% block content %}{% endblock %}
+    </div>
+  </div>
+{% block modal %}{% endblock %}
+{% block scripts %}{% endblock %}
 {% endblock %}
 </html>

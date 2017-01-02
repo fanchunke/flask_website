@@ -49,9 +49,23 @@ def article(id):
 
 # return json response for an article
 @blog.route('/_get_article_info/<int:id>')
-def ger_article_info(id):
+@login_required
+def get_article_info(id):
     article = Article.query.get_or_404(id)
-    return jsonify(title=article.title,body=article.body,
+    return jsonify(id=article.id,title=article.title,body=article.body,
                     pub_time=article.pub_time,mod_time=article.mod_time,
                     user=article.user,category=article.category,
                     comments=article.comments.all(),like_num=article.like_num)
+
+
+
+# return to a HTML page to manage articles
+# user must login in
+@blog.route('/articles')
+@login_required
+def articlesManage():
+    """
+    // 加用户是否登录的验证。如果没有登录，返回一个错误页面并引导登录
+    """
+    articles = Article.query.all()
+    return render_template('blog/managearticles.html', articles=articles)
