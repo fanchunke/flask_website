@@ -85,8 +85,8 @@ class Article(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(64), nullable=True)
     body = db.Column(db.Text)
-    pub_time = db.Column(db.DateTime, default=datetime.utcnow)
-    mod_time = db.Column(db.DateTime,)
+    pub_time = db.Column(db.DateTime, default=datetime.utcnow, index=True)
+    mod_time = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
     comments = db.relationship('Comment', lazy='dynamic')
@@ -102,8 +102,8 @@ class Message(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.Text)
-    pub_time = db.Column(db.DateTime, default=datetime.utcnow)
-    mod_time = db.Column(db.DateTime,)
+    pub_time = db.Column(db.DateTime, default=datetime.utcnow, index=True)
+    mod_time = db.Column(db.DateTime, default=datetime.utcnow)
     comments = db.relationship('Comment', lazy='dynamic')
 
     def __repr__(self):

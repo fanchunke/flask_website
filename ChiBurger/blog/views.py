@@ -61,7 +61,7 @@ def get_article_info(id):
 
 # return to a HTML page to manage articles
 # user must login in
-@blog.route('/articles')
+@blog.route('/articles', methods=['GET','POST'])
 @login_required
 def articlesManage():
     """
@@ -69,3 +69,13 @@ def articlesManage():
     """
     articles = Article.query.all()
     return render_template('blog/managearticles.html', articles=articles)
+
+"""
+// TODO 修改文章信息后的表单更新，并存储在数据库中
+"""
+@blog.route('/edit_article_info', methods=['GET','POST'])
+@login_required
+def editArticleInfo():
+    article = request.get_json()
+    print "success"
+    return article
