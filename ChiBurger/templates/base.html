@@ -6,11 +6,11 @@
 {% block title %}{% endblock %}
 
 {% block head %}
-{{ super() }}
-<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
-<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
-<script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/moment-with-locales.min.js') }}"></script>
 {% endblock %}
 
 {% block body %}
@@ -41,6 +41,12 @@
     </div>
   </div>
 {% block modal %}{% endblock %}
-{% block scripts %}{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+  $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+</script>
+{% endblock %}
+
 {% endblock %}
 </html>

@@ -13,23 +13,26 @@
         <tr>
           <th>title</th>
           <th>user</th>
+          <th>category</th>
           <th>pub_time</th>
           <th>likes</th>
+          <th>comments</th>
           <th>edit/delete</th>
         </tr>
       </thead>
       <tbody>
         {% if articles %}
         {% for article in articles %}
-        <tr>
-          <th>{{ article.title }}</th>
-          <th>{{ article.user }}</th>
-          <th>{{ article.category }}</th>
-          <th>{{ article.pub_time }}</th>
-          <th>{{ article.like_num }}</th>
+        <tr id="article{{article.id}}">
+          <th class="title">{{ article.title }}</th>
+          <th class="user">{{ article.user }}</th>
+          <th class="category">{{ article.category.name }}</th>
+          <th class="pub_time">{{ moment(article.pub_time).format('YYYY年M月D日, HH:mm') }}</th>
+          <th class="like_num">{{ article.like_num }}</th>
+          <th class="comments_num">{{ article.comments.count() }}</th>
           <th>
             <button type="button" class="btn btn-info btn-xs" onclick="edit_article('{{ url_for('blog.get_article_info', id=article.id) }}')"><span class="glyphicon glyphicon-edit"></span></button>
-            <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#delArticle"><span class="glyphicon glyphicon-remove-circle"></span></button>
+            <button type="button" class="btn btn-danger btn-xs" onclick="delete_article({{article.id}})"><span class="glyphicon glyphicon-remove-circle"></span></button>
           </th>
         </tr>
         {% endfor %}
@@ -56,21 +59,51 @@
       <!--增加修改表单-->
         <form role="form" class="form-horizontal" id="editArticleForm" action="{{ url_for("blog.editArticleInfo") }}">
           <div class="form-group">
+            <label for="articleID" class="col-sm-2 control-label">ID</label>
+            <div class="col-sm-10">
+              <input type="text" name="id" class="form-control" id="articleId" placeholder="文章ID" readonly>
+            </div>
+          </div>
+          <div class="form-group">
             <label for="articleTitle" class="col-sm-2 control-label">标题</label>
             <div class="col-sm-10">
               <input type="text" name="title" class="form-control" id="articleTitle" placeholder="文章标题">
             </div>
           </div>
+          <!-- <div class="form-group">
+            <label for="articleUser" class="col-sm-2 control-label">作者</label>
+            <div class="col-sm-10">
+              <input type="text" name="user" class="form-control" id="articleUser" placeholder="文章作者">
+            </div>
+          </div> -->
           <div class="form-group">
             <label for="articleCategory" class="col-sm-2 control-label">分类</label>
             <div class="col-sm-10">
               <input type="text" name="category" class="form-control" id="articleCategory" placeholder="文章分类">
             </div>            
           </div>
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label for="pubTime" class="col-sm-2 control-label">发布时间</label>
             <div class="col-sm-10">
               <input type="datetime" name="pub_time" class="form-control" id="pubTime">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="modTime" class="col-sm-2 control-label">修改时间</label>
+            <div class="col-sm-10">
+              <input type="datetime" name="mod_time" class="form-control" id="modTime">
+            </div>
+          </div> -->
+          <div class="form-group">
+            <label for="likeNum" class="col-sm-2 control-label">点赞数</label>
+            <div class="col-sm-10">
+              <input type="datetime" name="like_num" class="form-control" id="likeNum" readonly>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="commentsNum" class="col-sm-2 control-label">评论数</label>
+            <div class="col-sm-10">
+              <input type="datetime" name="comments_num" class="form-control" id="commentsNum" readonly>
             </div>
           </div>
         </form>
@@ -83,7 +116,7 @@
   </div>
 </div>
 
-<!-- A Modal To Edit Article Information-->
+<!-- A Modal To Delete Article-->
 <div class="modal fade" id="delArticle" tabindex="-1" role="dialog" aria-labelledby="delArticleLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content panel-danger">
@@ -96,7 +129,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
-        <button type="button" class="btn btn-danger">确认删除</button>
+        <button type="submit" class="btn btn-danger" id="cfmDelArticle">确认删除</button>
       </div>
     </div>
   </div>
@@ -106,16 +139,4 @@
 {% block scripts %}
 {{super()}}
 <script language="JavaScript" src="{{ url_for('static', filename='js/admin.js') }}"></script>
-<!-- <script type="text/javascript">
-  function edit_article(url) {
-    $.getJSON(url, function(data) {
-        alert("1");
-        alert("Json data:" + data.title);
-        $('#articleTitle').val(data.title);
-        $('#articleCategory').val(data.category);
-        $('#pubTime').val(data.pub_time);
-        $('#editArticleInfo').modal('show');
-    });
-}
-</script> -->
 {% endblock %}

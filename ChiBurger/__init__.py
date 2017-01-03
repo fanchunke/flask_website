@@ -6,6 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_login import LoginManager
 from flask_bootstrap import Bootstrap
+from flask_moment import Moment
 
 from config import config
 
@@ -15,6 +16,7 @@ login_manager = LoginManager()
 login_manager.session_protection = 'strong'
 login_manager.login_view = 'blog.login'
 bootstrap = Bootstrap()
+moment = Moment()
 
 def create_app(config_name):
     # initialize app
@@ -29,6 +31,7 @@ def create_app(config_name):
     # toolbar.init_app(app)
     login_manager.init_app(app)
     bootstrap.init_app(app)
+    moment.init_app(app)
 
     # import blueprint
     from .admin import admin as admin_blueprint
