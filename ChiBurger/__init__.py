@@ -14,7 +14,7 @@ db = SQLAlchemy()
 # toolbar = DebugToolbarExtension()
 login_manager = LoginManager()
 login_manager.session_protection = 'strong'
-login_manager.login_view = 'blog.login'
+login_manager.login_view = 'main.login'
 bootstrap = Bootstrap()
 moment = Moment()
 

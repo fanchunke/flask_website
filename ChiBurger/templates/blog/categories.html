@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block  title %}文章分类{% endblock %}
+
+{% block content %}
+
+{% if categories %}
+{% for category in categories %}
+<div id="category-list">
+    <ul>
+        <li><a href="{{ url_for('blog.category', name=category.name) }}">{{ category.name }}<span class="badge">{{ category.articles.count() }}</span></a></li>
+    </ul>
+</div>
+{% endfor %}
+{% else %}
+<h1>暂时没有分类</h1>>
+{% endif %}
+{% endblock %}

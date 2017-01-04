@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block  title %}{{ category.name }}{% endblock %}
+
+{% block content %}
+
+<div>
+    <h1>{{ category.name }}</h1>
+    {% if articles %}
+    <ul>
+        {% for article in articles %}
+        <li style="opacity: 1;display: block;transform: translateY(0px);""><a href="{{ url_for('blog.article', id=article.id) }}">{{ article.title }}</a></li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>该分类下暂时没有文章</p>
+    {%endif%}
+</div>
+
+{% endblock %}

@@ -5,7 +5,7 @@
 
 {% block content %}
 <div class="row">
-  <div class="col-md-4">
+  <div class="col-sm-4">
       {% with messages = get_flashed_messages() %}
           {% if messages %}
             <ul class=flashes>
@@ -15,7 +15,7 @@
             </ul>
           {% endif %}
       {% endwith %}
-      <h1>Sign Up</h1>
+      <h1>Login in</h1>
       {{ wtf.quick_form(form) }}
   </div>
 </div>

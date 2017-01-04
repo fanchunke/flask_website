@@ -4,23 +4,25 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-{% if current_user.is_authenticated %}
+<!-- {% if current_user.is_authenticated %}
 <h1>Hello, {{ current_user.username }}!</h1>
-{% endif %}
-<div class="row">
-    <div class="col-md-4">
-        <h3>I am a side</h3>
-    </div>
-    <div class="col-md-8">
-        <div class="article">
-            {% if article %}
-            <h1>{{ article.title }}</h1>
-            <span>时间：{{ article.pub_time }}</span>
-            <p>{{ article.body }}</p>
-            {% else %}
-            <p>No articles</p>
-            {% endif %}
+{% endif %} -->
+<div class="article">
+    {% if article %}
+    <header class="article-header">
+        <h2 class="article-title" itemprop="name headline">{{ article.title }}</h2>
+        <div class="article-meta">
+            <span class="pub_time">发表于{{ moment(article.pub_time).format('YYYY年M月D日') }}</span>
+            <span class="article-category">&nbsp; | &nbsp;类型：<a href="{{ url_for('blog.category',name=article.category.name) }}">{{article.category.name}}</a></span>
+            <span><a href="{{ url_for('blog.editArticle',id=article.id) }}">&nbsp; | &nbsp;编辑</a></span>
+            <span>&nbsp; | &nbsp;阅读量</span>
         </div>
+    </header>
+    <div class="article-body">
+        {{ article.body | safe }}
     </div>
+    {% else %}
+    <p>No articles</p>
+    {% endif %}
 </div>
 {% endblock %}

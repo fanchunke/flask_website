@@ -1,3 +1,89 @@
+
+body {
+    font-family: "Source Han Sans","PingFang SC","Helvetica Neue", 
+                 Helvetica, Arial, "Hiragino Sans GB", 
+                 "Heiti SC", "Microsoft YaHei", 
+                 "WenQuanYi Micro Hei", sans-serif !important;
+    color: #555;
+}
+.container {
+    width: 80%;
+}
 .modal-backdrop {
     z-index: auto !important;
+}
+.appmsg_edit_item.title .frm_input {
+    font-size: 22px;
+    height: 46px;
+    line-height: 46px;
+    position: relative;
+    z-index: 1;
+}
+.appmsg_edit_item.author .frm_input {
+    position: relative;
+    z-index: 1;
+}
+.frm_input {
+    margin: 4px 0;
+    height: 22px;
+    width: 100%;
+    background-color: transparent;
+    border: 0;
+    outline: 0;
+}
+.appmsg_edit_item.title .appmsg_edit_item.author .frm_input_box {
+    width: auto;
+    display: block;
+    border: 0;
+    height: auto;
+    line-height: 1.6;
+}
+.appmsg_edit_item.title {
+    margin: 20px 0 15px;
+    padding: 0 70px;
+    position: relative;
+}
+.appmsg_edit_item.author {
+    margin: 15px 0 10px;
+    padding: 0 70px 10px;
+    position: relative;
+}
+.appmsg_edit_item.title .placeholder_tips {
+    font-size: 22px;
+    top:10px;
+    position: absolute;
+    left: 90px;
+}
+.appmsg_edit_item.author .placeholder_tips {
+    font-size: 22px;
+    top:3px;
+    position: absolute;
+    left: 90px;
+}
+.tips_global {
+    color: #8d8d8d;
+}
+
+header {
+    display: block;
+}
+.article-title {
+    text-align: center;
+    word-break: break-word;
+    position: relative;
+    font-size: 26px;
+    font-weight: 400;
+}
+h1, h2, h3, h4, h5, h6 {
+    margin: 20px 0 10px;
+    padding: 0;
+    line-height: 1.5;
+}
+.article-meta {
+    margin-bottom: 60px;
+    text-align: center;
+    margin-top: 5px;
+    margin: 3px 0 60px;
+    color: #999;
+    font-size: 12px;
 }

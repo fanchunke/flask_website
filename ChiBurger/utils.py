@@ -1,7 +1,8 @@
 # -*- coding:utf-8 -*-
 
 from flask import jsonify
-from .models import Article, Category, db
+from .models import Article, Category
+from . import db
 
 """
 These are some useful functions for current app.
@@ -25,3 +26,23 @@ def get_json_articleInfo(id):
                     "comments_num": article.comments.count(),
                     "like_num": article.like_num
                     })
+
+
+def add_category(name):
+    category = Category.query.filter_by(name=name).first()
+    if category is None:
+        category = Category(name=name)
+        db.session.add(category)
+        db.session.commit()
+    return category
+
+
+def get_json_categoryInfo(name):
+    category = Category.query.filter_by(name=name).first()
+    articles = category.articles.all()
+    if category is not None:
+        return jsonify({
+                        "id": category.id,
+                        "name": category.name,
+                        "articles_num": category.articles.count()
+                        })
