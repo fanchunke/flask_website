@@ -4,17 +4,22 @@
 
 {% block content %}
 
-<div>
-    <h1>{{ category.name }}</h1>
-    {% if articles %}
-    <ul>
-        {% for article in articles %}
-        <li style="opacity: 1;display: block;transform: translateY(0px);"><a href="{{ url_for('blog.article', id=article.id) }}">{{ article.title }}</a></li>
-        {% endfor %}
-    </ul>
+<div class="primary-head">
+    <h2 class="normal-head">{{ category.name }}</h2>
+    {% if article_num != 0 %}
+    <span>共有{{ article_num }}篇文章，继续努力！</span>
     {% else %}
-    <p>该分类下暂时没有文章</p>
-    {%endif%}
+    <span>暂时还没有文章</span>
+    {% endif %}
+</div>
+{% if articles %}
+<div class="article-list">
+<ul>
+    {% for article in articles %}
+    <li style="opacity: 1;display: block;transform: translateY(0px);" class="articles-collapse primary-body"><a href="{{ url_for('blog.article', id=article.id) }}">{{ article.title }}</a></li>
+    {% endfor %}
+</ul>
+{%endif%}
 </div>
 
 {% endblock %}

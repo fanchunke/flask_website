@@ -19,19 +19,22 @@ def index():
 @blog.route('/categories')
 def categories():
     categories = Category.query.all()
-    return render_template('blog/categories.html', categories=categories)
+    category_num = Category.query.count()
+    return render_template('blog/categories.html', categories=categories,category_num=category_num)
 
 # 返回某一类文章分类
 @blog.route('/categories/<name>')
 def category(name):
     category = Category.query.filter_by(name=name).first_or_404()
     articles = category.articles.all()
-    return render_template('blog/category.html', category=category, articles=articles)
+    article_num = category.articles.count()
+    return render_template('blog/category.html', category=category, articles=articles, article_num=article_num)
 
 @blog.route('/articles')
 def articles():
     articles = Article.query.order_by(Article.pub_time.desc()).all()
-    return render_template('blog/articles.html', articles=articles)
+    article_num = Article.query.count()
+    return render_template('blog/articles.html', articles=articles, article_num=article_num)
 
 # 返回某一篇文章的详情页
 @blog.route('/article/<int:id>')

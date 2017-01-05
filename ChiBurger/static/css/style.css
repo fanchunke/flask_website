@@ -7,11 +7,19 @@ body {
                  "WenQuanYi Micro Hei", sans-serif !important;
     color: #555;
 }
-
+/*body{
+-webkit-animation-name:fadein;
+-webkit-animation-duration:1s;
+-webkit-animation-timing-function:linear;
+-webkit-animation-iteration-count:1;
+}*/
 h1, h2, h3, h4, h5, h6 {
     margin: 20px 0 10px;
     padding: 0;
     line-height: 1.5;
+}
+th {
+    font-weight: normal;
 }
 a {
     text-decoration: none;
@@ -146,4 +154,30 @@ header {
 }
 .article p {
     font-size: 16px;
+}
+
+/*常规标题*/
+.primary-head {
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+.normal-head {
+    font-size: 26px;
+    font-weight: 400;
+    display: inline;
+    padding: 5px;
+}
+li.primary-body {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: block;
+}
+.admin-panel {
+    background-color: #f3f3f3;
+}
+.admin-panel-body {
+    padding-left: 50px;
+}
+.admin-panel-title {
+    margin-top: 0px;
 }
