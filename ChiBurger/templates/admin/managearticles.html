@@ -1,18 +1,19 @@
-{% extends 'base.html' %}
+{% extends 'adminBase.html' %}
 
 {% block  title %}Manage Articles{% endblock %}
 
 {% block  content %}
 <div class="row">
-  <div class="col-sm-4">
-    I am siderbar!
-  </div>
-  <div class="col-sm-8">
+  {% include 'admin/sidebar.html' %}
+  <div class="col-sm-9">
+    <header>
+      <h3>文章管理</h3>
+    </header>
     <table class="table table-striped  table-condensed">
       <thead>
         <tr>
+          <th>id</th>
           <th>title</th>
-          <th>user</th>
           <th>category</th>
           <th>pub_time</th>
           <th>likes</th>
@@ -24,14 +25,14 @@
         {% if articles %}
         {% for article in articles %}
         <tr id="article{{article.id}}">
+          <th class="id">{{ article.id }}</th>
           <th class="title">{{ article.title }}</th>
-          <th class="user">{{ article.user }}</th>
           <th class="category">{{ article.category.name }}</th>
-          <th class="pub_time">{{ moment(article.pub_time).format('YYYY年M月D日, HH:mm') }}</th>
+          <th class="pub_time">{{ moment(article.pub_time).format('YYYY-M-D') }}</th>
           <th class="like_num">{{ article.like_num }}</th>
           <th class="comments_num">{{ article.comments.count() }}</th>
           <th>
-            <button type="button" class="btn btn-info btn-xs" onclick="edit_article('{{ url_for('blog.get_article_info', id=article.id) }}')"><span class="glyphicon glyphicon-edit"></span></button>
+            <button type="button" class="btn btn-info btn-xs" onclick="edit_article('{{ url_for('admin.get_article_info', id=article.id) }}')"><span class="glyphicon glyphicon-edit"></span></button>
             <button type="button" class="btn btn-danger btn-xs" onclick="delete_article({{article.id}})"><span class="glyphicon glyphicon-remove-circle"></span></button>
           </th>
         </tr>
@@ -57,7 +58,7 @@
       </div>
       <div class="modal-body">
       <!--增加修改表单-->
-        <form role="form" class="form-horizontal" id="editArticleForm" action="{{ url_for("blog.editArticleInfo") }}">
+        <form role="form" class="form-horizontal" id="editArticleForm" action="{{ url_for("admin.editArticleInfo") }}">
           <div class="form-group">
             <label for="articleID" class="col-sm-2 control-label">ID</label>
             <div class="col-sm-8">

@@ -8,7 +8,7 @@
 {% for category in categories %}
 <div id="category-list">
     <ul>
-        <li><a href="{{ url_for('blog.category', name=category.name) }}">{{ category.name }}<span class="badge">{{ category.articles.count() }}</span></a></li>
+        <li style="opacity: 1;display: block;transform: translateY(0px);" class="articles-collapse"><a href="{{ url_for('blog.category', name=category.name) }}">{{ category.name }}<span class="badge">{{ category.articles.count() }}</span></a></li>
     </ul>
 </div>
 {% endfor %}

@@ -1,56 +1,41 @@
 {% extends 'base.html' %}
-{% import "bootstrap/wtf.html" as wtf  %}
 
 {% block title %}Home{% endblock %}
 
 {% block content %}
-{% if current_user.is_authenticated %}
-<h1>Hello, {{ current_user.username }}!</h1>
-{% endif %}
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-{% for message in messages %}
-<div class="alert alert-success" role="alert">{{message}}</div>
-{% endfor %}
-{% endif %}
-{% endwith %}
-<br>
-<div class="row">
-    <div class="col-md-6">
-        {{ wtf.quick_form(form) }}
+
+<div class="article-list">
+{% if articles %}
+{% for article in articles %}
+<div id="article{{ article.id }}" class="article-post">
+    <header class="article-header">
+        <h2 class="article-title" itemprop="name headline">{{ article.title }}</h2>
+        <div class="article-meta">
+            <span class="pub_time">发表于：{{ moment(article.pub_time).format('YYYY-M-D') }}</span>
+            <span class="article-category">&nbsp; | &nbsp;类型：<a href="{{ url_for('blog.category',name=article.category.name) }}">{{article.category.name}}</a></span>
+            {% with comment_count = article.comments.count() %}
+            {% if comment_count != 0 %}
+            <span>&nbsp; | &nbsp;评论：{{ article.comments.count() }}条</span>
+            {% else %}
+            <span>&nbsp; | &nbsp;暂无评论</span>
+            {% endif %}
+            {% endwith %}
+            <span>&nbsp; | &nbsp;阅读量</span>
+            {% if current_user.is_authenticated %}
+            <span>&nbsp; | &nbsp;<a href="{{ url_for('admin.editArticle',id=article.id) }}">编辑</a></span>
+            {% endif %}
+        </div>
+    </header>
+    <div class="article-body">
+        {{ article.body | safe | truncate(100) }}
+    </div>
+    <div class="article-footer">
+        <h5><a href="{{ url_for('blog.article', id=article.id)}}">阅读全文>></a></h5>
     </div>
 </div>
-<br>
-{% if articles %}
-<h2>Articles in my blog</h2>
-<div class="article">
-<table class="table table-borded table-hover table-condensed">
-    <thead>
-    <tr>
-        <th>title</th>
-        <th>user</th>
-        <th>pub_time</th>
-        <th>likes</th>
-        <th>edit/delete</th>
-    </tr>
-</thead>
-<tbody>
-    {% for article in articles %}
-    <tr>
-        <th>{{ article.title }}</th>
-        <th>{{ article.user }}</th>
-        <th>{{ article.pub_time }}</th>
-        <th>{{ article.like_num }}</th>
-        <th>
-            <span><a href="#"> Edit</a></span>
-            <span><a href="#"> Delete</a></span>
-        </th>
-    </tr>
-    {% endfor %}
-</tbody>
-</table>
-</div>
+{% endfor %}
 {% else %}
-    <p>No articles</p>
+
 {% endif %}
+</div>
 {% endblock %}

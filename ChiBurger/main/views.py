@@ -21,7 +21,7 @@ def login():
             if user.vertify_password(form.password.data):
                 login_user(user)
                 flash("You have logined in successfully!")
-                return redirect(request.args.get('next') or url_for('main.index'))
+                return redirect(request.args.get('next') or url_for('blog.index'))
             flash('Invalid password')
         else:
             flash('Invalid email')

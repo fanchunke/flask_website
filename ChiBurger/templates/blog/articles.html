@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block  title %}文章{% endblock %}
+
+{% block content %}
+
+{% if articles %}
+{% for article in articles %}
+<div id="article-list">
+    <ul>
+        <li style="opacity: 1;display: block;transform: translateY(0px);" class="articles-collapse"><a href="{{ url_for('blog.article', id=article.id) }}">{{ article.title }}</a></li>
+    </ul>
+</div>
+{% endfor %}
+{% else %}
+<h1>暂时没有分类</h1>>
+{% endif %}
+{% endblock %}

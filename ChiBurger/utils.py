@@ -37,9 +37,8 @@ def add_category(name):
     return category
 
 
-def get_json_categoryInfo(name):
-    category = Category.query.filter_by(name=name).first()
-    articles = category.articles.all()
+def get_json_categoryInfo(id):
+    category = Category.query.filter_by(id=id).first()
     if category is not None:
         return jsonify({
                         "id": category.id,
