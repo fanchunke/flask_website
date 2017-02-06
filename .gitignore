@@ -90,3 +90,6 @@ ENV/
 
 # flask instance
 instance/
+
+# editormd
+editormd/
