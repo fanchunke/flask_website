@@ -68,8 +68,12 @@ class Comment(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.Text)
+    pub_time = db.Column(db.DateTime, default=datetime.utcnow, index=True)
     article_id = db.Column(db.Integer, db.ForeignKey('articles.id'))
-    message_id = db.Column(db.Integer, db.ForeignKey('messages.id'))
+    user_ip = db.Column(db.String(20))
+    user_platform = db.Column(db.String(15))
+    user_browser = db.Column(db.String(20))
+    # message_id = db.Column(db.Integer, db.ForeignKey('messages.id'))
 
     def __repr__(self):
         return '<Comment %r>' % self.body
@@ -103,7 +107,7 @@ class Message(db.Model):
     body = db.Column(db.Text)
     pub_time = db.Column(db.DateTime, default=datetime.utcnow, index=True)
     mod_time = db.Column(db.DateTime, default=datetime.utcnow)
-    comments = db.relationship('Comment', lazy='dynamic')
+    # comments = db.relationship('Comment', lazy='dynamic')
 
     def __repr__(self):
         return 'Message %r' % self.body

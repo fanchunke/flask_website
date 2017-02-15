@@ -1,17 +1,18 @@
 {% extends 'base.html' %}
 
-{% block title %}Home{% endblock %}
+{% block title %} Home {% endblock %}
 
 {% block content %}
 
 <div id="article-list" class="article-list">
 {% if articles %}
+<ul class="article-post">
 {% for article in articles %}
-    <div id="article{{ article.id }}" class="article-post">
+    <li id="article{{ article.id }}" class="article-post">
         <div class="article-header">
             <h2 class="article-title" itemprop="name headline">{{ article.title }}</h2>
             <div class="article-meta">
-                <span class="pub_time">发表于：{{ moment(article.pub_time).format('YYYY-M-D') }}</span>
+                <span class="pub_time">发表于：{{moment(article.pub_time).format('YYYY-M-D HH:mm:ss')}}</span>
                 <span class="article-category">&nbsp; | &nbsp;类型：<a href="{{ url_for('blog.category',name=article.category.name) }}">{{article.category.name}}</a></span>
                 {% with comment_count = article.comments.count() %}
                 {% if comment_count != 0 %}
@@ -27,15 +28,17 @@
             </div>
         </div>
         <div class="article-body">
-            {{ article.body | safe | truncate(100) }}
+            {{ article.body|safe|truncate(100) }}
         </div>
         <div class="article-footer">
             <span style="color: #555"><a href="{{ url_for('blog.article', id=article.id)}}">阅读全文</a></span>
         </div>
-    </div>
+    </li>
 {% endfor %}
+</ul>
 {% else %}
 <h2>暂时没有文章</h2>
 {% endif %}
 </div>
+
 {% endblock %}

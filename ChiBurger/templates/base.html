@@ -1,58 +1,62 @@
-{% extends 'bootstrap/base.html' %}
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 
-{% block title %}{% endblock %}
+<title>{% block title %}{% endblock %}</title>
 
-{% block head %}
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/animate.min.css') }}">
-<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/moment-with-locales.js') }}"></script>
-<!-- {{ moment.include_moment() }} -->
-{% endblock %}
+<head>
+  {% block head %}
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/animate.min.css') }}" />
+  <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+  <!-- <script src="{{ url_for('static', filename='js/moment-with-locales.js') }}"></script> -->
+  {% endblock %}
+</head>
 
-{% block body %}
-  {% block navbar %}
-  <nav class="navbar navbar-default" role="navigation">
-    <div class="container">
-      <div class="navbar-collapse collapse">
-        <ul class="nav navbar-nav">
-          <li role="presentation"><a href="{{url_for('blog.index')}}">首页</a></li>
-          <li role="presentation">
-            <a href="{{url_for('blog.categories')}}">分类</a></li>
-          <li role="presentation">
-            <a href="{{url_for('blog.articles')}}">文章</a></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          {% if current_user.is_authenticated %}
-            <li><a href="{{ url_for('admin.index') }}">后台管理</a></li>
-            <li><a href="{{ url_for('main.logout') }}">退出</a></li>
-            {% else %}
-            <li><a href="{{ url_for('main.login') }}">登录</a></li>
-          {% endif %}
-          <!-- <li><a href="{{ url_for('main.signup') }}">注册</a></li> -->
-        </ul>
+<body>
+  {% block body %}
+    {% block navbar %}
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li role="presentation"><a href="{{url_for('blog.index')}}">首页</a></li>
+            <li role="presentation">
+              <a href="{{url_for('blog.categories')}}">分类</a></li>
+            <li role="presentation">
+              <a href="{{url_for('blog.articles')}}">文章</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            {% if current_user.is_authenticated %}
+              <li><a href="{{ url_for('admin.index') }}">后台管理</a></li>
+              <li><a href="{{ url_for('main.logout') }}">退出</a></li>
+              {% else %}
+              <li><a href="{{ url_for('main.login') }}">登录</a></li>
+            {% endif %}
+            <!-- <li><a href="{{ url_for('main.signup') }}">注册</a></li> -->
+          </ul>
+        </div>
+      </div>
+    </nav>
+    {% endblock %}
+    <div class="container blog-container">
+      <div class="row">
+      {% block content %}{% endblock %}
       </div>
     </div>
-  </nav>
+  {% block modal %}{% endblock %}
+
   {% endblock %}
-  <div class="container blog-container">
-    <div class="row">
-    {% block content %}{% endblock %}
-    </div>
-  </div>
-{% block modal %}{% endblock %}
 
-{% block scripts %}
-<script type="text/javascript">
-  $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-</script>
-{% endblock %}
+  {% block scripts %}
+  {{ moment.include_moment(local_js=url_for('static', filename='js/moment-with-locales.js')) }}
+  {{moment.lang('zh-cn')}}
+  <script>
+    $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+  </script>
+  {% endblock %}
+</body>
 
-{% endblock %}
 </html>
