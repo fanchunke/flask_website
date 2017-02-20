@@ -45,3 +45,23 @@ def get_json_categoryInfo(id):
                         "name": category.name,
                         "articles_num": category.articles.count()
                         })
+
+
+# 获取一个模型实例各字段，
+# 并将各字段的值放进字典
+def get_model_columns(instance):
+    dicts = {}
+    cols = instance.__table__.columns
+    for col in cols:
+        colName = col.name
+        dicts[colName] = getattr(instance, colName)
+    return dicts
+
+
+# 获取某个模型实例的json数据
+def get_json_model(instances):
+    data = []
+    for instance in instances:
+        dicts = get_model_columns(instance)
+        data.append(dicts)
+    return data

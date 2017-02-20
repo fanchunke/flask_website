@@ -5,13 +5,12 @@
 
 <head>
   {% block head %}
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="viewport" charset="utf8" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/animate.min.css') }}" />
   <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
   <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-  <!-- <script src="{{ url_for('static', filename='js/moment-with-locales.js') }}"></script> -->
   {% endblock %}
 </head>
 
@@ -31,6 +30,7 @@
           <ul class="nav navbar-nav navbar-right">
             {% if current_user.is_authenticated %}
               <li><a href="{{ url_for('admin.index') }}">后台管理</a></li>
+              <li><a href="{{ url_for('profile.home', username='admin') }}">个人主页</a></li>
               <li><a href="{{ url_for('main.logout') }}">退出</a></li>
               {% else %}
               <li><a href="{{ url_for('main.login') }}">登录</a></li>

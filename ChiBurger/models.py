@@ -18,6 +18,7 @@ class User(UserMixin, db.Model):
     create_date = db.Column(db.DateTime, default=datetime.utcnow)
     is_adminstration = db.Column(db.Boolean,default=False)
     articles = db.relationship('Article', backref='user', lazy='dynamic')
+    profile = db.relationship('Profile', backref='user', uselist=False)
 
     @property
     def password(self):
@@ -39,6 +40,22 @@ class User(UserMixin, db.Model):
 @login_manager.user_loader
 def login_user(user_id):
     return User.query.get(int(user_id))
+
+
+# profile of a user
+class Profile(db.Model):
+
+    __tablename__ = 'profiles'
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    nickname = db.Column(db.String(10))
+    gender = db.Column(db.String(4))
+    address = db.Column(db.String(4))
+    discription = db.Column(db.Text)
+
+    def __repr__(self):
+        return '<Profile %r>' % self.nickname
 
 
 # category of a post
@@ -92,7 +109,7 @@ class Article(db.Model):
     mod_time = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
-    comments = db.relationship('Comment', lazy='dynamic')
+    comments = db.relationship('Comment', backref='article', lazy='dynamic')
     like_num = db.Column(db.Integer, default=0)
 
     def __repr__(self):

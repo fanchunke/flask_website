@@ -6,13 +6,17 @@ from flask_login import login_user, logout_user, login_required, user_login_conf
 from . import blog
 from .. import db, moment
 from ..models import Article, User, Category, Comment
-from ..utils import get_json_articleInfo, add_category
 from .forms import ArticleForm
+from ..utils import get_json_articleInfo, add_category
+from .. import apis
 
 
 @blog.route('/', methods=['GET', 'POST'])
+# def index():
+#     articles = Article.query.order_by(Article.pub_time.desc()).all()
+#     return render_template('blog/index.html', articles=articles)
 def index():
-    articles = Article.query.order_by(Article.pub_time.desc()).all()
+    articles = apis.getArticles()
     return render_template('blog/index.html', articles=articles)
 
 # 返回所有的文章分类

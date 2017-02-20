@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block title %}个人主页{% endblock %}
+
+{% block content %}
+
+<div id="profile-header" class="profileHeader">
+    <div class="card">
+        <div class="profileHeader-userCover">
+            <div class="userCoverEditor">
+                <div class="userCoverGuide">
+                    
+                </div>
+                <div class="userCover userCover--colorBlock"></div>
+                <input type="file" accept="image/png,image/jpeg" style="display: none;">
+            </div>
+        </div>
+        <div class="profileHeader-wrapper">
+            <div class="profileHeader-main">
+                <div class="userAvatarEditor profileHeader-avatar" style="top: -57px;">
+                    <div class="UserAvatar">
+                    <img class="Avatar Avatar--large UserAvatar-inner" src="{{url_for('static', filename='avatar.png')}}" style="width: 160px; height: 160px;">
+                    </div>
+                </div>
+                <div class="profileHeader-content">
+                    <div class="profileHeader-contentHead">
+                        <h1 class="profileHeader-title">
+                            <span class="profileHeader-name">
+                                {% if profile %}
+                                {{profile.nickname}}
+                                {% else %}
+                                {{user.username}}
+                                {% endif %}
+                            </span>
+                        </h1>
+                    </div>
+                    <div class="profileHeader-contentBody">
+                        <span>
+                            <div class="profileHeader-detail">
+                                <div class="profileHeader-detailItem">
+                                    <span class="profileHeader-detailLabel">居住地</span>
+                                    <div class="profileHeader-detailValue">
+                                        <span>现居上海</span>
+                                    </div>
+                                </div>
+                                <div class="profileHeader-detailItem">
+                                    <span class="profileHeader-detailLabel">性别</span>
+                                    <div class="profileHeader-detailValue">
+                                        <span>男</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </span>
+                    </div>
+                    {% if current_user.is_authenticated %}
+                    <div class="profileHeader-contentFooter">
+                        <div class="profielButtonGroup profileHeader-buttons">
+                            <button class="Button Button--blue" type="button"><a href="{{ url_for('profile.editProfile', user_id=current_user.id) }}">编辑个人资料</a></button>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="profile-main">
+    <div class="profile-mainColumn">
+        <div class="card profileMain" id="profileMain">
+            <p>Hello</p>
+        </div>
+    </div>
+</div>
+<div>
+    <h1>{{ user.username }}</h1>
+    <h1>{{ user.id }}</h1>
+    <h2>{{ user.email }}</h2>
+    <h2>{{ user.create_date }}</h2>
+    {% for article in user.articles %}
+        <h3>{{ article.title }}</h3>
+    {% endfor %}
+</div>
+{% endblock %}
