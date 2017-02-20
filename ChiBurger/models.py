@@ -74,6 +74,14 @@ class Category(db.Model):
         db.session.add(category)
         db.session.commit()
 
+
+    def to_json(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'article_num': self.articles.count()
+        }
+
     def  __repr__(self):
         return '<Category %r>' % self.name
 
@@ -91,6 +99,17 @@ class Comment(db.Model):
     user_platform = db.Column(db.String(15))
     user_browser = db.Column(db.String(20))
     # message_id = db.Column(db.Integer, db.ForeignKey('messages.id'))
+
+    def to_json(self):
+        return {
+            'id': self.id,
+            'body': self.body,
+            'pub_time': self.pub_time,
+            'article_id': self.article_id,
+            'user_ip': self.user_ip,
+            'user_platform': self.user_platform,
+            'user_browser': self.user_browser
+        }
 
     def __repr__(self):
         return '<Comment %r>' % self.body
@@ -111,6 +130,18 @@ class Article(db.Model):
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
     comments = db.relationship('Comment', backref='article', lazy='dynamic')
     like_num = db.Column(db.Integer, default=0)
+
+    def to_json(self):
+        return {
+            'id': self.id,
+            'title': self.title,
+            'body': self.body,
+            'pub_time': self.pub_time,
+            'user_id': self.user_id,
+            'category_id': self.category_id,
+            'comments_num': self.comments.count(),
+            'like_num': self.like_num
+        }
 
     def __repr__(self):
         return '<Article %r>' % self.title

@@ -8,16 +8,15 @@ from .. import db, moment
 from ..models import Article, User, Category, Comment
 from .forms import ArticleForm
 from ..utils import get_json_articleInfo, add_category
-from .. import apis
 
 
 @blog.route('/', methods=['GET', 'POST'])
-# def index():
-#     articles = Article.query.order_by(Article.pub_time.desc()).all()
-#     return render_template('blog/index.html', articles=articles)
 def index():
-    articles = apis.getArticles()
+    articles = Article.query.order_by(Article.pub_time.desc()).all()
     return render_template('blog/index.html', articles=articles)
+# def index():
+#     articles = apis.getArticles()
+#     return render_template('blog/index.html', articles=articles)
 
 # 返回所有的文章分类
 @blog.route('/categories')
