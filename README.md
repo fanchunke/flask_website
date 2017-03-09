@@ -28,7 +28,7 @@
 
 ## 截图
  
- #### 首页
+#### 首页
 <img src="https://github.com/fanchunke1991/flask_website/raw/master/logo/index.png" width = "500" alt="首页" align=center />
 #### 文章页
 <img src="https://github.com/fanchunke1991/flask_website/raw/master/logo/article.png" width = "500"  alt="文章页" align=center />
