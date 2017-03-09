@@ -27,9 +27,15 @@
   
  ## 截图
  
+ #### 首页
 <img src="https://github.com/fanchunke1991/flask_website/raw/master/logo/index.png" width = "500" alt="首页" align=center />
-<img src="https://github.com/fanchunke1991/flask_website/raw/master/logo/article.png" width = "500"  alt="文章页" align=center />
-<img src="https://github.com/fanchunke1991/flask_website/raw/master/logo/comment.png" width = "500"  alt="评论页" align=center />
-<img src="https://github.com/fanchunke1991/flask_website/raw/master/logo/homepage_1.png" width = "500"  alt="个人主页-1" align=center />
-<img src="https://github.com/fanchunke1991/flask_website/raw/master/logo/homepage_2.png" width = "500"  alt="个人主页-2" align=center />
- <img src="https://github.com/fanchunke1991/flask_website/raw/master/logo/edit_profile.png" width = "500"  alt="个人信息" align=center />
+#### 文章页
+<img src="https://github.com/fanchunke1991/flask_website/raw/master/logo/article.png" width = "500"  alt="文章页" align=center />
+#### 评论页
+<img src="https://github.com/fanchunke1991/flask_website/raw/master/logo/comment.png" width = "500"  alt="评论页" align=center />
+#### 个人主页-1
+<img src="https://github.com/fanchunke1991/flask_website/raw/master/logo/homepage_1.png" width = "500"  alt="个人主页-1" align=center />
+#### 个人主页-2
+<img src="https://github.com/fanchunke1991/flask_website/raw/master/logo/homepage_2.png" width = "500"  alt="个人主页-2" align=center />
+#### 个人信息页
+ <img src="https://github.com/fanchunke1991/flask_website/raw/master/logo/edit_profile.png" width = "500"  alt="个人信息" align=center />
