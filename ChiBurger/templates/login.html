@@ -6,17 +6,9 @@
 {% block content %}
 <div class="row">
   <div class="col-sm-4">
-      {% with messages = get_flashed_messages() %}
-          {% if messages %}
-            <ul class=flashes>
-            {% for message in messages %}
-              <li>{{ message }}</li>
-            {% endfor %}
-            </ul>
-          {% endif %}
-      {% endwith %}
-      <h1>Login in</h1>
+      <h1>登录</h1>
       {{ wtf.quick_form(form) }}
+      <!-- <p>还没有账户？<a href="{{url_for('main.signup')}}">点击注册</a></p> -->
   </div>
 </div>
 {% endblock %}

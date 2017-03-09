@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block  title %}文章分类{% endblock %}
+{% block  title %} 文章分类 {% endblock %}
 
 {% block content %}
 
@@ -16,7 +16,7 @@
 <div id="category-list">
 <ul>
 {% for category in categories %}
-        <li style="opacity: 1;display: block;transform: translateY(0px);" class="articles-collapse primary-body"><a href="{{ url_for('blog.category', name=category.name) }}">{{ category.name }}<span class="badge">{{ category.articles.count() }}</span></a></li>
+    <li style="opacity: 1;display: block;transform: translateY(0px);" class="articles-collapse primary-body"><a href="{{ url_for('blog.category', id=category.id) }}">{{ category.name }}<span class="badge">{{ category.articles.count() }}</span></a></li>
 {% endfor %}
 </ul>
 </div>

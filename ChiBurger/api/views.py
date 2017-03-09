@@ -4,6 +4,7 @@ from datetime import datetime
 from flask import jsonify, make_response, request
 from flask_login import login_required
 
+from . import api
 from .. import db
 from ..models import User, Article, Comment, Category
 from ..utils import add_category
@@ -104,6 +105,9 @@ def getCategory(id):
 def addCategory():
     form = request.form
     name = form.get('category-name')
+    category = Category.query.filter_by(name=name).first()
+    if category:
+        return jsonify(status='fail', error='The category already exists.')
     category = Category(name=name)
     db.session.add(category)
     db.session.commit()

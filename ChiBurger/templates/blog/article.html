@@ -1,83 +1,28 @@
 {% extends 'base.html' %}
-{% import "bootstrap/wtf.html" as wtf  %}
 
-{% block title %}Home{% endblock %}
+{% block title %} {{ article.title }} {% endblock %}
 
 {% block content %}
-<!-- {% if current_user.is_authenticated %}
-<h1>Hello, {{ current_user.username }}!</h1>
-{% endif %} -->
+
+{% import 'blog/article_macro.html' as article_macro %}
 <div class="article">
     <header class="article-header">
         <h2 class="article-title" itemprop="name headline">{{ article.title }}</h2>
-        <div class="article-meta">
-            <span class="pub_time">发表于：{{ moment(article.pub_time).format('YYYY-M-D') }}</span>
-            <span class="article-category">&nbsp; | &nbsp;类型：<a href="{{ url_for('blog.category',name=article.category.name) }}">{{article.category.name}}</a></span>
-            {% if current_user.is_authenticated %}
-            <span>&nbsp; | &nbsp;<a href="{{ url_for('admin.editArticle',id=article.id) }}"><span class="glyphicon glyphicon-edit"></span>&nbsp; 编辑</a></span>
-            {% endif %}
-            <span>&nbsp; | &nbsp;阅读量</span>
-        </div>
+        {{ article_macro.article_meta(article, moment, current_user) }}
     </header>
     <div class="article-detail article-body">
         {{ article.body | safe }}
     </div>
 </div>
 <br />
-<!-- UY BEGIN -->
-<!-- <div id="uyan_frame"></div>
-<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js"></script> -->
-<!-- UY END -->
-<div class="comments">
-    <form id="addComment" action="{{ url_for('blog.addComments', id=article.id) }}" method="post">
-        <textarea class="comments" name="body" placeholder="请输入评论"></textarea>
-    </form>
-    <!-- 注意这个button是由Ajax控制的，因此要放在form表单的外面，
-    否则该表单就会被提交两次，一次是form表单提交，一次是Ajax提交。 -->
-    <button id="submitComment" type="submit" class="btn btn-info">发表评论</button>
+
+<div class="comment-list">
+    {{ article_macro.comment(article, moment, comments) }}
 </div>
-<div id="articleComment" class="comment-area comment-area-box">
-    <div class="comment-tab">
-        <ul class="comment-tab-left">
-            <li class="current comment-show">全部评论<em class="num" id="allCommentNum">({{ article.comments.count() }})</em></li>
-        </ul>
-    </div>
-    <div class="comment-area-list">
-        {% if comments %}
-        <div class="comment-list-body">
-            {% for comment in comments %}
-                <div class="comment-item" id="comment-{{ comment.id }}">
-                    <div class="comment-content">
-                        <div class="comment-user-avatar">
-                            <img src="{{ url_for('static', filename='anonymous.gif') }}">
-                        </div>
-                        <div class="comment-section">
-                            <div class="comment-user-info">
-                            {% if comment.user_ip is none or comment.user_platform is none or comment.user_browser is none %}
-                                <span>来自 匿名网友</span>
-                            {% else %}
-                                <span>来自 {{ comment.user_ip }} 的网友 ({{ comment.user_platform }}/{{ comment.user_browser }})</span>
-                            {% endif %}
-                            </div>
-                            <div class="comment-text">
-                                <p class="comment">{{ comment.body }}</p>
-                            </div>
-                            <div class="comment-handle comment-handle-btn">
-                                <span class="comment-timestamp">{{ moment(comment.pub_time).fromNow() }}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-            <br />
-        {% else %}
-            <p class="comment no-comment">暂无评论!</p>
-        {% endif %}
-    </div>
-</div>
+    
 {% endblock %}
 
 {% block scripts %}
 {{super()}}
-<script src="{{ url_for('static', filename='js/blog.js') }}"></script>
+<script src="{{ url_for('static', filename='js/comment.js') }}"></script>
 {% endblock %}

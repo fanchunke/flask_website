@@ -16,9 +16,12 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))
     email = db.Column(db.String(64), unique=True, nullable=False, index=True)
     create_date = db.Column(db.DateTime, default=datetime.utcnow)
+    avatar = db.Column(db.String(64))
     is_adminstration = db.Column(db.Boolean,default=False)
     articles = db.relationship('Article', backref='user', lazy='dynamic')
     profile = db.relationship('Profile', backref='user', uselist=False)
+    photos = db.relationship('Photo', backref='user', lazy='dynamic')
+    messages = db.relationship('Message', backref='user', lazy='dynamic')
 
     @property
     def password(self):
@@ -30,6 +33,14 @@ class User(UserMixin, db.Model):
 
     def vertify_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+    def to_json(self):
+        return {
+            'id': self.id,
+            'username': self.username,
+            'email': self.email,
+            'avatar': self.avatar
+        }
 
     def __repr__(self):
         return '<User %r>' % self.username
@@ -53,6 +64,21 @@ class Profile(db.Model):
     gender = db.Column(db.String(4))
     address = db.Column(db.String(4))
     discription = db.Column(db.Text)
+    about = db.Column(db.Text)
+    about_md = db.Column(db.Text)
+    cover = db.Column(db.String(64))
+
+    def to_json(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'nickname': self.nickname,
+            'gender': self.gender,
+            'address': self.address,
+            'discription': self.discription,
+            'about': self.about,
+            'about_md': self.about_md
+        }
 
     def __repr__(self):
         return '<Profile %r>' % self.nickname
@@ -147,15 +173,39 @@ class Article(db.Model):
         return '<Article %r>' % self.title
 
 
+class Photo(db.Model):
+
+    __tablename__ = 'photos'
+
+    id = db.Column(db.Integer, primary_key=True)
+    url = db.Column(db.String(64))
+    category = db.Column(db.String(20))
+    pub_time = db.Column(db.DateTime, default=datetime.utcnow, index=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+
+
+
 class Message(db.Model):
 
     __tablename__ = 'messages'
 
     id = db.Column(db.Integer, primary_key=True)
+    # cat = db.Column(db.String(10))
     body = db.Column(db.Text)
     pub_time = db.Column(db.DateTime, default=datetime.utcnow, index=True)
     mod_time = db.Column(db.DateTime, default=datetime.utcnow)
     # comments = db.relationship('Comment', lazy='dynamic')
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    def to_json(self):
+        return {
+            'id': self.id,
+            'body': self.body,
+            'pub_time': self.pub_time,
+            'mod_time': self.mod_time,
+            'user_id': self.user_id
+        }
 
     def __repr__(self):
         return 'Message %r' % self.body

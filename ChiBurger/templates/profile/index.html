@@ -1,84 +1,129 @@
 {% extends 'base.html' %}
 
-{% block title %}个人主页{% endblock %}
+{% block title %} 个人主页 {% endblock %}
+
+{% block head %}
+{{super()}}
+<script src="{{ url_for('static', filename='editormd/editormd.js') }}"></script>
+<link rel="stylesheet" href="{{url_for('static', filename='editormd/css/editormd.css')}}" />
+{% endblock %}
 
 {% block content %}
 
-<div id="profile-header" class="profileHeader">
-    <div class="card">
-        <div class="profileHeader-userCover">
-            <div class="userCoverEditor">
-                <div class="userCoverGuide">
-                    
-                </div>
-                <div class="userCover userCover--colorBlock"></div>
-                <input type="file" accept="image/png,image/jpeg" style="display: none;">
-            </div>
-        </div>
-        <div class="profileHeader-wrapper">
-            <div class="profileHeader-main">
-                <div class="userAvatarEditor profileHeader-avatar" style="top: -57px;">
-                    <div class="UserAvatar">
-                    <img class="Avatar Avatar--large UserAvatar-inner" src="{{url_for('static', filename='avatar.png')}}" style="width: 160px; height: 160px;">
-                    </div>
-                </div>
-                <div class="profileHeader-content">
-                    <div class="profileHeader-contentHead">
-                        <h1 class="profileHeader-title">
-                            <span class="profileHeader-name">
-                                {% if profile %}
-                                {{profile.nickname}}
-                                {% else %}
-                                {{user.username}}
-                                {% endif %}
-                            </span>
-                        </h1>
-                    </div>
-                    <div class="profileHeader-contentBody">
-                        <span>
-                            <div class="profileHeader-detail">
-                                <div class="profileHeader-detailItem">
-                                    <span class="profileHeader-detailLabel">居住地</span>
-                                    <div class="profileHeader-detailValue">
-                                        <span>现居上海</span>
-                                    </div>
-                                </div>
-                                <div class="profileHeader-detailItem">
-                                    <span class="profileHeader-detailLabel">性别</span>
-                                    <div class="profileHeader-detailValue">
-                                        <span>男</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </span>
-                    </div>
-                    {% if current_user.is_authenticated %}
-                    <div class="profileHeader-contentFooter">
-                        <div class="profielButtonGroup profileHeader-buttons">
-                            <button class="Button Button--blue" type="button"><a href="{{ url_for('profile.editProfile', user_id=current_user.id) }}">编辑个人资料</a></button>
-                        </div>
-                    </div>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+{% import 'pagination_macros.html' as pagination_macros %}
+{% import 'profile/profile_header.html' as profile_header %}
+{{ profile_header.profile_header(profile, user, current_user) }}
 
 <div class="profile-main">
     <div class="profile-mainColumn">
         <div class="card profileMain" id="profileMain">
-            <p>Hello</p>
+            <!-- main page-header -->
+            <div class="ProfileMain-header">
+                <ul class=" Tabs ProfileMain-tabs">
+                    <li class=" Tabs-item"><a class="Tabs-link" href="#profile" data-toggle="tab">个人简介</a></li>
+                    <li class="active Tabs-item"><a class="Tabs-link" href="#activity" data-toggle="tab">动态</a></li>
+                </ul>
+            </div>
+
+            <div class="tab-content" id="Profile-activities">
+                <div class="List tab-pane fade " id="profile">
+                    <div class="List-header">
+                        <h4 class="List-headerText"><span>关于我</span></h4>
+                        {% if current_user == user %}
+                        <span><button id="edit-about">编辑</button></span>
+                        {% endif %}
+                    </div>
+                    {% if profile is none or profile.about is none %}
+                    <div class="EmptyState">
+                        <div class="EmptyState-inner">
+                            <div class="EmptyState-image"><i class="fa fa-file-text-o fa-3x"></i></div>
+                            <span>还没有简介</span>
+                            {% if current_user == user %}
+                            <div><button id="about">点击添加</button></div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% else %}
+                    <div>
+                        <div class="List-item">{{ profile.about | safe }}</div>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="List tab-pane fade in active" id="activity">
+                    {% if current_user == user %}
+                    <div class="activity">
+                        <form id="addActivity" action="{{url_for('profile.addActivity', username=user.username)}}" method="post">
+                            <textarea class="activity" name="body" placeholder="有什么新鲜事想要分享给大家"></textarea>
+                            <!-- <button id="submitActivity" type="submit" class="btn btn-info">发布</button> -->
+                        </form>
+                        <button id="submitActivity" type="submit" class="btn btn-info">发布</button>
+                    </div>
+                    {% endif %}
+                    <div class="List-header">
+                        {% if current_user == user %}
+                        <h4 class="List-headerText"><span>我的动态</span></h4>
+                        {% else %}
+                        <h4 class="List-headerText"><span>他的动态</span></h4>
+                        {% endif %}
+                    </div>
+                    {% if messages_num == 0 %}
+                    <div class="EmptyState">
+                        <div class="EmptyState-inner">
+                            <div class="EmptyState-image"><i class="fa fa-comments fa-3x"></i></div>
+                            <span>还没有分享</span>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="Activity-list">
+                        {% for message in messages %}
+                        <div class="Activity-item">
+                            <div class="activity-content">
+                                <div class="activity-user-avatar">
+                                    {% if user.avatar is none %}
+                                    <img src="{{ url_for('static', filename='anonymous.gif') }}">
+                                    {% else %}
+                                    <img src="{{ user.avatar }}">
+                                    {% endif %}
+                                </div>
+                                <div class="activity-section">
+                                    <div class="activity-user-info">
+                                    {% if profile is none or profile.nickname is none %}
+                                    {{user.username}}
+                                    {% else %}
+                                    {{profile.nickname}}
+                                    {% endif %}
+                                    </div>
+                                    <div class="activity-text">
+                                        <p class="comment">{{ message.body }}</p>
+                                    </div>
+                                    <div class="activity-handle activity-handle-btn">
+                                        <span class="comment-timestamp">{{ moment(message.pub_time).fromNow() }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="pagination-item">
+                    <div class="pagination">
+                        {{pagination_macros.pagination_widget(pagination, 'profile.home', username=user.username)}}
+                    </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
-<div>
-    <h1>{{ user.username }}</h1>
-    <h1>{{ user.id }}</h1>
-    <h2>{{ user.email }}</h2>
-    <h2>{{ user.create_date }}</h2>
-    {% for article in user.articles %}
-        <h3>{{ article.title }}</h3>
-    {% endfor %}
-</div>
+
+{% endblock %}
+
+{% block scripts %}
+{{  super() }}
+<script src="{{ url_for('static', filename='js/jquery.form.js') }}" ></script>
+<script src="{{ url_for('static', filename='js/profile.js') }}" ></script>
+<script>
+    var username = '{{current_user.username }}' ;
+</script>
 {% endblock %}

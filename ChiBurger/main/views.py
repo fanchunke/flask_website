@@ -4,12 +4,12 @@ from flask import render_template, url_for, redirect, flash, request
 from flask_login import login_user, logout_user, login_required
 from . import main
 from .. import db
-from ..models import User
+from ..models import User, Profile
 from .forms import LoginForm, SignupForm
 
 @main.route('/')
 def index():
-    return render_template('index.html')
+    return redirect(url_for('blog.index'))
 
 @main.route('/login', methods=['GET','POST'])
 def login():
@@ -41,7 +41,9 @@ def signup():
         user = User(username=form.username.data,
                     password=form.password.data,
                     email=form.email.data)
+        profile = Profile(user_id=user.id)
         db.session.add(user)
+        db.session.add(profile)
         db.session.commit()
         flash("You have signed up successfully. Now you can login in.")
         return redirect(url_for('main.login'))

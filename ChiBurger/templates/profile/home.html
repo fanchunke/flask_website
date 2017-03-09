@@ -1,23 +1,63 @@
-<!DOCTYPE html>
+<!DOCTYPE>
 <html>
-<head>
-    <meta charset="utf-8">
-    <title>React</title>
-    <script src="{{ url_for('static', filename='js/react/browser.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/react/remarkable.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='bower_components/react/react.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='bower_components/react/react-dom.min.js') }}"></script>
-</head>
-<body>  
-    <div class="container">
-      <h1>Flask React</h1>
-      <br>
-      <div id="content"></div>
-      <div id="main"></div>
-    </div>
-    <h1>Hello world!</h1>
-    <!-- <script type="text/babel" src="{{ url_for('static', filename='js/react/comment.js') }}"> </script> -->
-    <script type="text/babel" src="{{ url_for('static', filename='scripts/js/main.js') }}"> </script>
-</body>
+    <head>
+        <title>CSS修改默认的input标签中file（文件上传）样式</title>
+        <meta charset = "utf-8" />
+        <style type="text/css">                 
+            *{
+                margin:0;
+                padding:0;
+                font-size:12px;
+            }
+            .wrap{
+                position:relative;
+                overflow:hidden;
+                margin-right:4px;
+                display:inline-block;
+                padding:4px 10px;
+                line-height:18px;
+                text-align:center;
+                vertical-align:middle;
+                cursor:pointer;
+                background:#D8450B;
+                border:1px dotted #D8450B;
+                border-radius:4px;
+                -webkit-border-radius:4px;
+                -moz-border-radius:4px;
+            }
+            .wrap span{             
+                color:#FFF;
+            } 
+            .wrap .file{
+                position:absolute;
+                top:0;
+                right:0;
+                margin:0;
+                border:solid transparent;
+                opacity:0;
+                filter:alpha(opacity=0);
+                cursor: pointer;
+            } 
+        </style>
+    </head>
+    <body>
+        <form action="">
+            <table>
+                <tr>
+                    <td>默认样式：</td>
+                    <td><input type="file" /></td>
+                </tr>
+                <tr>
+                    <td>修改后样式：</td>
+                    <td>
+                        <div class="wrap">
+                            <span>添加附件</span>
+                            <input id="fileupload" class="file" type="file" />
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <p>主要思想是：把file/input（position:absolute）使用一个div（position:relative）包装起来，然后再将file/input给隐藏起来，那就实现了修改样式的效果，其实并非真正修改了file/input的样式，而是利用wrap的样式遮盖了file/input。</p>
+    </body>
 </html>

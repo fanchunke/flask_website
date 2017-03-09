@@ -1,8 +1,11 @@
 # -*- coding:utf-8 -*-
 
-from flask import jsonify
+import time, hashlib
+
+from flask import jsonify, request
+from flask_login import current_user
 from .models import Article, Category
-from . import db
+from . import db, photos
 
 """
 These are some useful functions for current app.
@@ -47,21 +50,30 @@ def get_json_categoryInfo(id):
                         })
 
 
-# 获取一个模型实例各字段，
-# 并将各字段的值放进字典
-def get_model_columns(instance):
-    dicts = {}
-    cols = instance.__table__.columns
-    for col in cols:
-        colName = col.name
-        dicts[colName] = getattr(instance, colName)
-    return dicts
+# # 获取一个模型实例各字段，
+# # 并将各字段的值放进字典
+# def get_model_columns(instance):
+#     dicts = {}
+#     cols = instance.__table__.columns
+#     for col in cols:
+#         colName = col.name
+#         dicts[colName] = getattr(instance, colName)
+#     return dicts
 
 
-# 获取某个模型实例的json数据
-def get_json_model(instances):
-    data = []
-    for instance in instances:
-        dicts = get_model_columns(instance)
-        data.append(dicts)
-    return data
+# # 获取某个模型实例的json数据
+# def get_json_model(instances):
+#     data = []
+#     for instance in instances:
+#         dicts = get_model_columns(instance)
+#         data.append(dicts)
+#     return data
+
+# 上传文件
+def upload(file):
+    filename = hashlib.md5(current_user.username + str(time.time())).hexdigest()[:10]
+    photo = photos.save(file, name=filename + '.')
+    if photo:
+        url = photos.url(photo)
+        return url
+

@@ -5,18 +5,25 @@
 {% block content %}
 <div class="card">
     <div class="profileHeader-header">
-        <div class="userCoverEditor">
-            <div class="userCoverGuide">
-                
+        <div class="UserCoverEditor">
+            <div class="UserCover">
+                {% if profile.cover is none %}
+                <img class="UserCover-image" src="{{ url_for('static', filename='img/cover.jpg') }}" alt="默认封面">
+                {% else %}
+                <img class="UserCover-image" src="{{ profile.cover }}" alt="用户封面">
+                {% endif %}
             </div>
-            <div class="userCover userCover--colorBlock"></div>
-            <input type="file" accept="image/png,image/jpeg" style="display: none;">
         </div>        
     </div>
     <div class="profileHeader-main">
-        <div  class="userAvatarEditor profileHeader-avatar" style="top: -57px;">
+        <div class="userAvatarEditor profileHeader-avatar" style="top: -57px;">
             <div class="UserAvatar">
-                <img class="Avatar Avatar--large UserAvatar-inner" src="{{url_for('static', filename='avatar.png')}}" style="width: 160px; height: 160px;">
+            {% set user_avatar = current_user.avatar %}
+            {% if user_avatar is none %}
+            <img class="Avatar Avatar--large UserAvatar-inner" src="{{url_for('static', filename='img/avatar.png')}}" style="width: 160px; ">
+            {% else %}
+            <img class="Avatar Avatar--large UserAvatar-inner" src="{{user_avatar}}" style="width: 160px; ">
+            {% endif %}
             </div>
         </div>
         <div class="profileHeader-content">
@@ -33,32 +40,39 @@
             </div>
             <div class="profileEdit-fields">
                 <form class="Field">
+                    <h3 class="Field-label">昵称</h3>
+                    <div class="Field-content">
+                        {% if profile.nickname %}
+                        <span class="Field-text">{{ profile.nickname }}</span>
+                        {% endif %}
+                        <button class="Button ModifyButton Field-modify Field-modify-hidden Button--link" type="button"><i class="fa fa-pencil"></i> 修改</button>
+                    </div>
+                </form>
+                <form class="Field">
                     <h3 class="Field-label">性别</h3>
-                    <div class="Field-content gender">
-                        <!-- <div> -->
+                    <div class="Field-content">
                         {% if profile.gender %}
                         <span class="Field-text">{{ profile.gender }}</span>
                         {% endif %}
-                        <button id="editGender" class="Button ModifyButton Field-modify Field-modify-hidden Button--link" type="button">修改</button>
-                        <!-- </div> -->
+                        <button class="Button ModifyButton Field-modify Field-modify-hidden Button--link" type="button"><i class="fa fa-pencil"></i> 修改</button>
                     </div>
                 </form>
                 <form class="Field">
                     <h3 class="Field-label">居住地</h3>
-                    <div class="Field-content address">
+                    <div class="Field-content">
                         {% if profile.address %}
-                        <span id="address" class="Field-text">{{ profile.address }}</span>
+                        <span class="Field-text">{{ profile.address }}</span>
                         {% endif %}
-                        <button id="editAddress" class="Button ModifyButton Field-modify Field-modify-hidden Button--link" type="button">修改</button>
+                        <button class="Button ModifyButton Field-modify Field-modify-hidden Button--link" type="button"><i class="fa fa-pencil"></i> 修改</button>
                     </div>
                 </form>
                 <form class="Field">
-                    <h3 class="Field-label">简介</h3>
+                    <h3 class="Field-label">个人简介</h3>
                     <div class="Field-content">
                         {% if profile.discription %}
                         <span class="Field-text">{{ profile.discription }}</span>
                         {% endif %}
-                        <button id="editDiscription" class="Button ModifyButton Field-modify Field-modify-hidden Button--link" type="button">修改</button>
+                        <button class="Button ModifyButton Field-modify Field-modify-hidden Button--link" type="button"><i class="fa fa-pencil"></i> 修改</button>
                     </div>
                 </form>
             </div>
@@ -70,7 +84,7 @@
 {% block scripts %}
 {{super()}}
 <script>
-    var user_id = {{current_user.id}};
+    var username = '{{current_user.username }}' ;
 </script>
 <script src="{{url_for('static', filename='js/edit_profile.js')}}"></script>
 {% endblock %}

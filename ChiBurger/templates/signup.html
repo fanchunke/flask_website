@@ -6,16 +6,7 @@
 {% block content %}
 <div class="row">
   <div class="col-md-4">
-      {% with messages = get_flashed_messages() %}
-          {% if messages %}
-            <ul class=flashes>
-            {% for message in messages %}
-              <li>{{ message }}</li>
-            {% endfor %}
-            </ul>
-          {% endif %}
-      {% endwith %}
-      <h1>Sign Up</h1>
+      <h3>注册账户</h3>
       {{ wtf.quick_form(form) }}
   </div>
 </div>

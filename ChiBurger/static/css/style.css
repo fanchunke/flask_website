@@ -1,11 +1,16 @@
 
 /*全局*/
+html {
+    height: 100%;
+}
 body {
     font-family: "Source Han Sans","PingFang SC","Helvetica Neue", 
                  Helvetica, Arial, "Hiragino Sans GB", 
                  "Heiti SC", "Microsoft YaHei", 
                  "WenQuanYi Micro Hei", sans-serif !important;
     color: #555;
+    position: relative;
+    min-height: 100%;
 }
 /*body{
 -webkit-animation-name:fadein;
@@ -25,7 +30,7 @@ a {
     text-decoration: none;
     color: #555;
 }
-a:hover {
+a:hover, a:active, a:focus, a:visited{
     text-decoration: none;
     color: #111;
 }
@@ -33,6 +38,15 @@ p {
     line-height:200%;
     margin-top:25px;
     margin-bottom: 25px;
+}
+button {
+    outline: none;
+}
+.navbar {
+    border:none;
+}
+.clear {
+    clear: both;
 }
 .container {
     width: 60%;
@@ -47,8 +61,42 @@ p {
     padding-left: 15px;
     padding-right: 15px;
 }
+#container {
+    padding-bottom: 100px;
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    color: #999;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    height: 60px;
+}
+.footer-container {
+    position: relative;
+    width: 60%;
+    margin-right: auto;
+    margin-left: auto;
+    border-top: 1px dashed #999;
+    padding: 10px 0 30px 0;
+}
+.footer .contact {
+    display: inline-block;
+    float: right;
+}
+.footer .contact span {
+    margin: 0 10px;
+}
+span.wechat {
+    color: #00bb29;
+}
+span.weibo {
+    color: #e05244;
+}
 
-/*导航栏*/
+/*导航栏
 .navbar-default {
     background-color: #f5f5f5;
     border: none;
@@ -187,6 +235,9 @@ li.primary-body {
 .admin-panel-title {
     margin-top: 0px;
 }
+#editormd {
+    z-index: 203;
+}
 
 /*文章列表展示*/
 ul.article-post {
@@ -197,7 +248,7 @@ li.article-post {
 }
 
 /*评论样式*/
-textarea.comments {
+textarea.comments, textarea.activity{
     min-height: 81px;
     width: 100%;
     padding: 4px;
@@ -210,7 +261,7 @@ textarea.comments {
     resize: vertical;
     overflow: hidden;
 }
-#submitComment {
+#submitComment, #submitActivity {
     float: right;
     margin-top: 8px;
 }
@@ -231,22 +282,22 @@ textarea.comments {
     border-top:1px solid transparent;
     padding-top: 10px;
 }
-.comment-area-list .comment-item {
+.comment-area-list .comment-item, .activity-item {
     position: relative;
     padding-bottom: 10px;
     margin-bottom: 10px;
     border-bottom: 1px solid #e5e5e5;
 }
-.comment-area-list .comment-section {
+.comment-area-list .comment-section, .activity-section {
     overflow: hidden;
     zoom:1;
 }
-.comment-area-list .comment-text {
+.comment-area-list .comment-text, .activity-text {
     padding-top: 5px;
     margin-bottom: 10px;
     font-size: 14px;
 }
-.comment-area-list .comment-user-info {
+.comment-area-list .comment-user-info, .activity-user-info {
     color: #bbb;
     font-size: 14px;
 }
@@ -286,17 +337,17 @@ textarea.comments {
     margin: 0 3px;
     color: #909090;
 }
-.comment-handle.comment-handle-btn {
+.comment-handle.comment-handle-btn, .activity-handle.activity-handle-btn {
     display: inline-block;
     margin-right: 15px;
     outline: 0;
     color: #bbb;
 }
-.comment-content .comment-user-avatar {
+.comment-content .comment-user-avatar, .activity-content .activity-user-avatar {
     float: left;
     margin-right: 10px;
 }
-.comment-content .comment-user-avatar img{
+.comment-content .comment-user-avatar img, .activity-content .activity-user-avatar img{
     width: 50px;
     height: 50px;
     border-radius: 25px;
@@ -366,6 +417,7 @@ h1.profileHeader-title {
     text-overflow: ellipsis;
     white-space: nowrap;
     margin-top: 0;
+    line-height: 1.1;
 }
 .profileHeader-name {
     font-size: 26px;
@@ -377,7 +429,7 @@ h1.profileHeader-title {
     width: 100%;
     overflow: hidden;
     transition: height .3s;
-    padding-bottom: 20px;
+    margin-bottom: 8px;
 }
 .profileHeader-detail {
     width: 100%;
@@ -387,7 +439,7 @@ h1.profileHeader-title {
 }
 .profileHeader-detailItem {
     display: flex;
-    margin-bottom: 18px;
+    margin-bottom: 10px;
 }
 .profileHeader-detailLabel {
     width: 60px;
@@ -401,14 +453,15 @@ h1.profileHeader-title {
 }
 .profileHeader-contentFooter {
     position: relative;
-    padding-top: 8px;
+    margin-bottom: 15px;
 }
 .profileHeader-buttons {
-    position: absolute;
     right: 0;
     bottom: 0;
+    float: right;
+    padding-top: 8px;
 }
-.Button--blue {
+.Button.Button--blue {
     color: #0f88eb;
     border:1px solid #0f88eb;
 }
@@ -458,6 +511,7 @@ button {
     overflow: hidden;
     border:4px solid #fff;
     border-radius: 8px;
+    border-bottom: 0px;
 }
 .profile-main {
     display: flex;
@@ -479,6 +533,7 @@ button {
 .Field {
     padding: 30px 0;
     border-bottom: 1px solid #ebeef5;
+    position: relative;
 }
 h3.Field-label {
     position: absolute;
@@ -490,15 +545,14 @@ h3.Field-label {
     display: inline;
 }
 .Field-content {
-    padding: 0 64px 0 140px;
+    padding: 0 0 0 140px;
     line-height: 36px;
-    display: inline;
+    display: block;
 }
-/*.Field-modify-hidden:not(:focus) {
+.Field-modify-hidden {
     opacity: 0;
-}*/
+}
 .Field-modify {
-    position: absolute;
     margin-left: 16px;
     line-height: inherit;
     transition: opacity .1s;
@@ -506,24 +560,13 @@ h3.Field-label {
 .ModifyButton  {
     font-size: 15px;
 }
-.Button--link {
-    color: #3e7ac2;
+.Button.Button--link {
+    color: #0f88eb;
     height: auto;
     padding: 0;
     background-color: transparent;
     border:none;
     border-radius: 0;
-}
-.Button {
-    display: inline-block;
-    padding: 0 16px;
-    font-size: 14px;
-    line-height: 34px;
-    color: #8590a6;
-    text-align: center;
-    cursor: pointer;
-    border:1px solid #ccd8e1;
-    border-radius: 3px;
 }
 .HeadlineField-input {
     width: 80%;
@@ -567,6 +610,9 @@ input.Input {
     margin-top: 24px;
     vertical-align: top;
 }
+.ButtonGroup button[type='button'] {
+    margin-left: 16px;
+}
 .Button--primary.Button--blue {
     background: #0f88eb;
     color: #fff;
@@ -578,14 +624,387 @@ input.Input {
     color: #0f88eb;
     border:1px solid #0f88eb;
 }
-.Button {
-    display: inline-block;
-    padding: 0 16px;
+.profileHeader-info {
     font-size: 14px;
-    line-height: 34px;
+    line-height: 20px;
+    box-sizing: border-box;
+}
+.profileHeader-infoItem {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.profileHeader-infoValue {
+    display: inline-block;
+    margin-left: 10px;
+}
+.profileHeader-iconWrapper {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    margin-right: 12px;
+    text-align: center;
+}
+.ProfileHeader-expandButton {
+    line-height: 1;
+}
+.Button--plain {
+    height: auto;
+    padding: 0;
+    background-color: transparent;
+    border:none;
+    border-radius: 0;
+}
+.TextArea {
+    padding: 4px 10px;
+    font-size:14px;
+    line-height: 26px;
+    background: #fafafa;
+    border:1px solid #e7e7e7;
+    border-radius: 3px;
+    outline: none;
+    box-sizing: border-box;
+    transition: background .2s;
+    resize: none;
+    width: 100%;
+}
+
+/*图像*/
+.Mask-hidden {
+    pointer-events: none;
+    opacity: 0;
+}
+.Mask {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    transition:opacity .2s ease-in;
+}
+.UserAvatarEditor-maskInner {
+    z-index: 4;
+    border:4px solid #fff;
+    border-radius: 8px;
+}
+.Mask-mask--black {
+    background: #000;
+}
+.Mask-mask {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    opacity: .4;
+    box-sizing: border-box;
+}
+.Mask-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 5;
+    color: #fff;
+    text-align: center;
+    transform: translate(-50%, -50%);
+}
+.UserAvatarEditor-maskInnerText {
+    white-space: nowrap;
+}
+.UserCoverEditor {
+    position: relative;
+}
+.UserCoverEditor-simpleEditButton {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    z-index: 1;
+}
+.DynamicColorButton {
+    color: #ccd8e1;
+    transition: color, border-color .3s
+}
+.UserCover {
+    position: relative;
+    height: 240px;
+    overflow: hidden;
+    background: #f7f8fa;
+    border-top-right-radius: 1px;
+    border-top-left-radius: 1px;
+    transition: height .3s;
+}
+.UserCover-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.UserCoverEditor-action {
+    height: 80px;
+    background: #fff;
+    border-bottom: 1px solid #e7eaf1;
+    box-shadow: 0 1px 3px rgba(0,37,55,.05);
+}
+.UserCoverEditor-actionContent {
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    margin: 0 24px;
+    float: right;
+}
+.UserCoverEditor-editor {
+    position: absolute;
+    left: -1px;
+    width: 100%;
+    box-shadow: 0 1px 3px rgba(0,37,55,.05);
+    top: -1px;
+    z-index: 5;
+    border:1px solid #e7eaf1;
+    border-top-right-radius: 2px;
+    border-top-left-radius: 2px;
+}
+
+
+/*上传图片模态框*/
+.Modal-wrapper {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index:203;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction:normal;
+    -ms-flex-direction:column;
+    -webkit-box-pack:center;
+    -ms-flex-pack:center;
+    justify-content: center;
+    overflow-x: hidden;
+    overflow-y: auto;
+    transition: opacity .3s ease-out;
+}
+.Modal-backdrop {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 0;
+    background-color: rgba(0,0,0,.65);
+    transition: background-color .3s ease-out;
+}
+.UserAvatarEditor {
+    text-align: center;
+}
+.Modal {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    width: 60%;
+    max-height: calc(100vh - 24px * 2);
+    margin-right: auto;
+    margin-left: auto;
+    outline: 0;
+    box-shadow: 0 5px 20px 0 rgba(0,34,77,.5);
+    box-sizing: border-box;
+    transition: max-height .8s ease;
+}
+.Modal-inner {
+    overflow: auto;
+    background: #fff;
+    border-radius: 2px;
+}
+.Modal-title {
+    margin-top: 40px;
+    font-size: 24px;
+    font-weight: 500;
+    color: #404040;
+    text-align: center;
+}
+.Modal-subtitle {
+    padding: 0 30px;
+    margin-top: 4px;
+    line-height: 1.5;
     color: #8590a6;
     text-align: center;
+}
+.Modal-content {
+    position: relative;
+    -webkit-box-flex:1;
+    flex: 1;
+    padding: 0 24px 32px;
+    margin-top: 24px;
+    font-size: 14px;
+    line-height: 1.7;
+    opacity: 1;
+}
+.UserAvatarEditor-container {
+    width: 256px;
+    height: 256px;
+    margin: 0 auto 30px;
+    cursor: move;
+    text-align: center;
+    display: table;
+    background-color: #f4f8fb;
+}
+.UserAvatarEditor-container span {
+    display: table-cell;
+    vertical-align: middle;
+}
+.UserAvatarEditor-container canvas {
+    vertical-align: top;
+}
+input[type=range].RangeInput {
+    width: 220px;
+    height: 12px;
+    padding: 0;
+    margin: 0 10px;
+    vertical-align: middle;
+    background: transparent;
+    -webkit-appearance:none;
+}
+.ModalButtonGroup--vertical {
+    margin-top: 40px;
+    margin-bottom: 16px;
+}
+.ModalButtonGroup--vertical .Button {
+    display: block;
+    width: 220px;
+    margin-right: auto;
+    margin-left: auto;
+}
+.Modal-closeButton {
+    position: absolute;
+    top: 8px;
+    right: -60px;
+    padding: 3px;
     cursor: pointer;
-    border:1px solid #ccd8e1;
-    border-radius: 3px;
+}
+.Modal-closeIcon {
+    vertical-align: top;
+    color: #fff;
+}
+
+/*个人信息页主体部分*/
+.ProfileMain-tabs {
+    -webkit-box-flex:1;
+    flex: 1;
+}
+.Tabs {
+    padding: 0 4px;
+    border-bottom: 1px solid #f0f2f7;
+}
+.Tabs-item {
+    display: inline-block;
+    padding: 0 20px;
+}
+.ProfileMain-header li {
+    list-style-type: none;
+}
+.nav-tabs li.active a {
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 3px solid #0f88eb;
+}
+.Tabs-link {
+    position: relative;
+    display: inline-block;
+    padding: 16px 0 17px;
+    font-size: 16px;
+    line-height: 22px;
+    color: #404040;
+    text-align: center;
+}
+li.active .Tabs-link {
+    font-weight: 700;
+    color: #333;
+}
+li.active .Tabs-link:after {
+    position: absolute;
+    right: 0;
+    bottom: -1px;
+    left: 0;
+    height: 3px;
+    background: #0f88eb;
+    content: '';
+}
+.List-header {
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 11px 0;
+    margin: 0 24px;
+    border-bottom: 1px solid #f0f2f7;
+}
+.List-headerText {
+    font-weight: 700;
+    font-size: 15px;
+    color: #262626;
+    display: block;
+    margin: 0 0;
+}
+.List .EmptyState {
+    padding: 70px 0;
+}
+.EmptyState {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    justify-content: center;
+    -webkit-box-flex: 1;
+    flex: 1;
+    height: 100%;
+}
+.EmptyState-inner {
+    font-size: 15px;
+    color: #8590a6;
+    text-align: center;
+}
+.List-item, .Activity-item {
+    position: relative;
+    padding: 20px 24px;
+    font-size: 14px;
+}
+.EmptyState-image {
+    display: block;
+    margin-right: auto;
+    margin-bottom: 24px;
+    margin-left: auto;
+}
+button#about {
+    margin: 10px 0;
+}
+#profileEditorForm {
+    text-align: center;
+    padding-bottom: 20px;
+}
+.tab-content {
+    min-height: 310px;
+}
+.activity {
+    padding: 20px 24px 50px 24px;
+}
+textarea.activity:focus {
+    border: 1px solid #0f88eb;
+}
+.Activity-item:after {
+    position: absolute;
+    bottom: 0;
+    display: block;
+    border-bottom: 1px solid #f0f2f7;
+    content: '';
+    width: calc(100% - 48px);
+}
+.pagination-item {
+    text-align: center;
 }

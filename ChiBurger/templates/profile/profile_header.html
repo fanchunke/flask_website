@@ -1,0 +1,146 @@
+{% macro profile_header(profile, user, current_user) -%}
+<div id="profile-header" class="profileHeader">
+    <div class="card">
+        <div class="profileHeader-userCover">
+            <div class="UserCoverEditor">
+                <div class="UserCover">
+                    {% if profile.cover is none %}
+                    <img class="UserCover-image" src="{{ url_for('static', filename='img/cover.jpg') }}" alt="默认封面">
+                    {% else %}
+                    <img class="UserCover-image" src="{{ profile.cover }}" alt="用户封面">
+                    {% endif %}
+                </div>
+                {% if current_user == user %}
+                <button class="Button UserCoverEditor-simpleEditButton DynamicColorButton" type="button"><i class="fa fa-camera"> 上传封面图片</i></button>
+                <form method="post" enctype="multipart/form-data" style="display: none;" action="{{ url_for('profile.uploadCover') }}">
+                    <input type="file" name="photo" />
+                </form>
+                <div class="UserCoverEditor-action" style="display: none">
+                    <div class="UserCoverEditor-actionContent">
+                        <div><button class="Button Button--primary Button--blue" type="button">保存</button>
+                        <button class="Button" type="button">取消</button>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="profileHeader-wrapper">
+            <div class="profileHeader-main">
+                <div class="userAvatarEditor profileHeader-avatar" style="top: -57px;">
+                    <div class="UserAvatar">
+                    {% if user.avatar is none %}
+                    <img class="Avatar Avatar--large UserAvatar-inner" src="{{url_for('static', filename='img/avatar.png')}}" style="width: 160px; ">
+                    {% else %}
+                    <img class="Avatar Avatar--large UserAvatar-inner" src="{{user.avatar}}" style="width: 160px; ">
+                    {% endif %}
+                    {% if current_user == user %}
+                    <div class="Mask UserAvatarEditor-mask Mask-hidden"><div class="Mask-mask Mask-mask--black UserAvatarEditor-maskInner"></div><div class="Mask-content"><i class="fa fa-camera"></i><div class="UserAvatarEditor-maskInnerText">修改我的头像</div></div></div>
+                    <form method="post" enctype="multipart/form-data" style="display: none;" action="{{ url_for('profile.uploadAvatar') }}">
+                        <input type="file" name="photo" />
+                        <button>提交</button>
+                    </form>
+                    {% endif %}
+                    </div>
+                </div>
+                <div class="profileHeader-content">
+                    <div class="profileHeader-contentHead">
+                        <h1 class="profileHeader-title">
+                            <span class="profileHeader-name">
+                                {% if profile and profile.nickname %}
+                                {{profile.nickname}}
+                                {% else %}
+                                {{user.username}}
+                                {% endif %}
+                            </span>
+                        </h1>
+                    </div>
+                    <div class="profileHeader-contentBody">
+                        {% if profile.gender %}
+                        <div class="profileHeader-info">
+                            <div class="profileHeader-infoItem">
+                                <i class="fa fa-mars"></i>
+                                <div class="profileHeader-infoValue">
+                                    <span>{{profile.gender}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        <div class="profileHeader-detail" style="display: none;">
+                            {% if profile.gender %}
+                            <div class="profileHeader-detailItem">
+                                <span class="profileHeader-detailLabel">性别</span>
+                                <div class="profileHeader-detailValue">
+                                    <span>{{ profile.gender }}</span>
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% if profile.address %}
+                            <div class="profileHeader-detailItem">
+                                <span class="profileHeader-detailLabel">居住地</span>
+                                <div class="profileHeader-detailValue">
+                                    <span>现居{{ profile.address }}</span>
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% if profile.discription %}
+                            <div class="profileHeader-detailItem">
+                                <span class="profileHeader-detailLabel">个人简介</span>
+                                <div class="profileHeader-detailValue">
+                                    <span>{{profile.discription}}</span>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="profileHeader-contentFooter">
+                        {% if profile.gender or profile.address or profile.discription %}
+                        <button class="Button ProfileHeader-expandButton Button--plain" type="button">查看详细资料</button>
+                        {% endif %}
+                        {% if current_user == user %}
+                        <div class="profielButtonGroup profileHeader-buttons">
+                            <a href="{{ url_for('profile.editProfile', username=current_user.username) }}"><button class="Button Button--blue" type="button">编辑个人资料</button></a>
+                        </div>
+                        <div class="clear"></div>
+                        {% endif %}
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 模态框 -->
+{% if current_user == user %}
+<div class="Modal-wrapper" style="display: none;">
+    <div class="Modal-backdrop"></div>
+    <div class="Modal Modal--default UserAvatarEditor-modal" tabindex="0">
+        <div class="Modal-inner">
+            <h3 class="Modal-title">编辑头像</h3>
+            <div class="Modal-subtitle">调整头像尺寸和位置</div>
+            <div class="Modal-content">
+                <div>
+                    <div class="UserAvatarEditor-container">
+                        <!-- <canvas width="240" height="240" style="width: 240px; height: 240px;"></canvas> -->
+                    </div>
+                    <!-- <div>
+                        <i class="fa fa-clone"></i>
+                        <input type="range" step="0.01" min="1" max="2" class="RangeInput" value="1">
+                        <i class="fa fa-clone fa-2x"></i>
+                    </div> -->
+                    <div class="ModalButtonGroup ModalButtonGroup--vertical">
+                        <button class="Button Button--primary Button--blue" type="button">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="Modal-snackbar Modal-snackbar--collapsed"></div>
+        <button class="Button Modal-closeButton Button--plain Modal-closeIcon" aria-label="关闭" type="button"><i class="fa fa-close fa-2x"></i></button>
+    </div>
+</div>
+{% endif %}
+<!-- 模态框 -->
+
+{%- endmacro %}
