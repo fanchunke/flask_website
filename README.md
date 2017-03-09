@@ -27,4 +27,4 @@
   
  ## 截图
  
- ![](https://github.com/fanchunke1991/flask_website/raw/master/logo/index.png)
+ ![](https://github.com/fanchunke1991/flask_website/raw/master/logo/index.png=100x100)
