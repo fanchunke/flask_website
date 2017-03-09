@@ -27,4 +27,5 @@
   
  ## 截图
  
+ <img src="https://github.com/fanchunke1991/flask_website/raw/master/logo/index.png" width = "300" height = "200" alt="图片名称" align=center />
  ![](https://github.com/fanchunke1991/flask_website/raw/master/logo/index.png  =100x100)
