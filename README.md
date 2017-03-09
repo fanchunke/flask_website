@@ -27,5 +27,9 @@
   
  ## 截图
  
- <img src="https://github.com/fanchunke1991/flask_website/raw/master/logo/index.png" width = "300" height = "200" alt="图片名称" align=center />
- ![](https://github.com/fanchunke1991/flask_website/raw/master/logo/index.png  =100x100)
+<img src="https://github.com/fanchunke1991/flask_website/raw/master/logo/index.png" width = "500" height = "500" alt="首页" align=center />
+<img src="https://github.com/fanchunke1991/flask_website/raw/master/logo/article.png" width = "500" height = "500" alt="文章页" align=center />
+<img src="https://github.com/fanchunke1991/flask_website/raw/master/logo/comment.png" width = "500" height = "500" alt="评论页" align=center />
+<img src="https://github.com/fanchunke1991/flask_website/raw/master/logo/homepage_1.png" width = "500" height = "500" alt="个人主页-1" align=center />
+<img src="https://github.com/fanchunke1991/flask_website/raw/master/logo/homepage_2.png" width = "500" height = "500" alt="个人主页-2" align=center />
+ <img src="https://github.com/fanchunke1991/flask_website/raw/master/logo/edit_profile.png" width = "500" height = "500" alt="个人信息" align=center />
