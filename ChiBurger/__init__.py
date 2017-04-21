@@ -47,13 +47,13 @@ def create_app(config_name):
     from .blog import blog as blog_blueprint
     from .main import main as main_blueprint
     from .profile import profile as profile_blueprint
-    from .api import api as api_blueprint
+    from .api_1_0 import api as api_1_0_blueprint
 
     # register blueprint
     app.register_blueprint(admin_blueprint, url_prefix='/admin')
     app.register_blueprint(blog_blueprint, url_prefix='/blog')
     app.register_blueprint(profile_blueprint, url_prefix='/profile')
-    app.register_blueprint(api_blueprint, url_prefix='/api')
+    app.register_blueprint(api_1_0_blueprint, url_prefix='/api/v1.0')
     app.register_blueprint(main_blueprint)
 
     return app
