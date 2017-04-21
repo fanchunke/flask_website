@@ -3,7 +3,6 @@
 from flask import Flask
 
 from flask_sqlalchemy import SQLAlchemy
-from flask_debugtoolbar import DebugToolbarExtension
 from flask_login import LoginManager
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
@@ -12,7 +11,6 @@ from flask_uploads import UploadSet, IMAGES, configure_uploads
 from config import config
 
 db = SQLAlchemy()
-# toolbar = DebugToolbarExtension()
 login_manager = LoginManager()
 login_manager.session_protection = 'strong'
 login_manager.login_view = 'main.login'
@@ -52,8 +50,8 @@ def create_app(config_name):
     from .api import api as api_blueprint
 
     # register blueprint
-    app.register_blueprint(admin_blueprint,url_prefix='/admin')
-    app.register_blueprint(blog_blueprint,url_prefix='/blog')
+    app.register_blueprint(admin_blueprint, url_prefix='/admin')
+    app.register_blueprint(blog_blueprint, url_prefix='/blog')
     app.register_blueprint(profile_blueprint, url_prefix='/profile')
     app.register_blueprint(api_blueprint, url_prefix='/api')
     app.register_blueprint(main_blueprint)

@@ -17,7 +17,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(64), unique=True, nullable=False, index=True)
     create_date = db.Column(db.DateTime, default=datetime.utcnow)
     avatar = db.Column(db.String(64))
-    is_adminstration = db.Column(db.Boolean,default=False)
+    is_adminstration = db.Column(db.Boolean, default=False)
     articles = db.relationship('Article', backref='user', lazy='dynamic')
     profile = db.relationship('Profile', backref='user', uselist=False)
     photos = db.relationship('Photo', backref='user', lazy='dynamic')
@@ -100,7 +100,6 @@ class Category(db.Model):
         db.session.add(category)
         db.session.commit()
 
-
     def to_json(self):
         return {
             'id': self.id,
@@ -108,7 +107,7 @@ class Category(db.Model):
             'article_num': self.articles.count()
         }
 
-    def  __repr__(self):
+    def __repr__(self):
         return '<Category %r>' % self.name
 
 
@@ -182,8 +181,6 @@ class Photo(db.Model):
     category = db.Column(db.String(20))
     pub_time = db.Column(db.DateTime, default=datetime.utcnow, index=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-
-
 
 
 class Message(db.Model):
